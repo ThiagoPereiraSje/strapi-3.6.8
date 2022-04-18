@@ -70,6 +70,11 @@
       "type": "component",
       "repeatable": false,
       "component": "page.price-box"
+    },
+    "sectionAboutUs": {
+      "type": "component",
+      "repeatable": false,
+      "component": "page.section-about-us"
     }
   }
 }
