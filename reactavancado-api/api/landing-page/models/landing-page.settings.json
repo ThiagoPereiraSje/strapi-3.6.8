@@ -39,6 +39,11 @@
       "type": "component",
       "repeatable": false,
       "component": "page.button"
+    },
+    "sectionAboutProject": {
+      "type": "component",
+      "repeatable": false,
+      "component": "page.section-about-project"
     }
   }
 }
