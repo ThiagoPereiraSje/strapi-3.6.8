@@ -16,7 +16,7 @@
       "repeatable": true,
       "component": "page.reviews",
       "required": true,
-      "max": 8
+      "min": 2
     }
   }
 }

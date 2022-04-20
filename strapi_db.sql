@@ -2050,9 +2050,9 @@ COPY public.authors_components (id, field, "order", component_type, component_id
 --
 
 COPY public.components_page_buttons (id, label, url) FROM stdin;
-1	Comprar	https://www.udemy.com/course/react-avancado/?couponCode=PROMOABR22
 3	Comprar	https://www.udemy.com/course/react-avancado/?couponCode=PROMOABR22
 2	Comprar o curso	https://www.udemy.com/course/react-avancado/?couponCode=PROMOABR22
+1	Comprar	https://www.udemy.com/course/react-avancado/?couponCode=PROMOABR22
 \.
 
 
@@ -2152,14 +2152,20 @@ COPY public.components_page_questions (id, question, answer) FROM stdin;
 --
 
 COPY public.components_page_reviews (id, name, text) FROM stdin;
-3	Daniel P. de Oliveira	É incrível a forma como foi passado o conteúdo do curso, dá para ver que o Will tem um domínio impressionante sobre as ferramentas e tecnologias passadas, e mesmo eu tendo pouco conhecimento em React consegui acompanhar o curso sem muitas dificuldades. Espero que tenha mais cursos nessa linha, com certeza comprarei! Obrigado Will!
-4	Mileine Souto	Sensacional! A didática do instrutor é excelente para estruturar o curso de dar o ritmo das aulas. Foi uma experiência muito enriquecedora (e divertida) construir um blog seguindo o passo-a-passo dos vídeos. Não sabia nada sobre Gatsby, GraphQL ou Netlify CMS mas consegui acompanhar todo o processo sem grandes dificuldades. Além disso, foi ótimo aprender um pouquinho mais sobre algumas práticas de \ndesenvolvimento, como temas em React, estilização CSS in JS com styled-components e\nutilização do Algolia como solução de busca. Recomendo! =)
 5	Douglas Lopes	Não teve nenhum curso que eu tenha feito, cuja autoria é do Willian Justem que eu não tenha gostado. Explica de uma maneira simples, didática, fácil de entender e assimilar. Fora isso, existem uma série de outros conhecimentos que acabam por vir embarcados em todos os cursos. Coisas como melhores práticas, facilidades da linguagem e itens novos da linguagem, organização de código, organização de arquivos, otimização para performance, otimização para SEO, etc. Sério, que curso completo e fácil de assimilar. Will, parabéns novamente e obrigado por disponibilizar um conteúdo tão rico e capaz de mudar a vida profissional de quem o faz. Não vejo a hora de fazer o próximo curso.
 6	Ariel Dalton	Sensacional esse curso, os pontos que destaco são a clareza nas explicações, stack tecnológica mais atual possível e sem enrolação. Agradeço ao Willian pelo esforço em produzir essa qualidade de curso que é até difícil encontrar algo desse na nível em Português.
 7	Karoline Medeiros	A didática é ótima, professor sabe o que fala e como passar a informação da melhor maneira possível. Acabei consumindo +60% do curso no dia em que comprei, depois que comecei foi difícil parar rsrs nota mil!
 1	Henrique Albert Schmalske	O Curo foi incrível! Gostei muito das explicações, bem claras e objetivas! Deixo a sugestão para um próximo Curso: NextJS Mostrando fazer um Ecommerce. Compraria sem nem olhar o preço.
 2	Alexandre Teixeira	Esse já é o terceiro curso do Will que faço, e a didática do cara é incrível! Além disso, o cara segue trazendo o que tem de mais moderno no mercado de forma bem explicada e com aplicações práticas.
+3	Daniel P. de Oliveira	É incrível a forma como foi passado o conteúdo do curso, dá para ver que o Will tem um domínio impressionante sobre as ferramentas e tecnologias passadas, e mesmo eu tendo pouco conhecimento em React consegui acompanhar o curso sem muitas dificuldades. Espero que tenha mais cursos nessa linha, com certeza comprarei! Obrigado Will!
+4	Mileine Souto	Sensacional! A didática do instrutor é excelente para estruturar o curso de dar o ritmo das aulas. Foi uma experiência muito enriquecedora (e divertida) construir um blog seguindo o passo-a-passo dos vídeos. Não sabia nada sobre Gatsby, GraphQL ou Netlify CMS mas consegui acompanhar todo o processo sem grandes dificuldades. Além disso, foi ótimo aprender um pouquinho mais sobre algumas práticas de \ndesenvolvimento, como temas em React, estilização CSS in JS com styled-components e\nutilização do Algolia como solução de busca. Recomendo! =)
+12	Rafael de Jesus	Didática incrível. O conhecimento básico no início do curso me serviu como revisão. Aquilo que já sabia fui passando rapidamente. Iniciei agora a parte prática de testes e gostei muito do exemplo real, assim como qualidade do audio e também conteúdo. Gostei muito que o autor explica algumas "teorias" em torno do que estamos fazendo e isso a longo prazo fixa melhor o conteúdo e faz total diferença.
+13	Jorge Bierhals Ramos	Os cursos do professor Willian Justen são excelentes, sua forma de ensinar é incrível. Caso precise de uma ajuda ele está sempre pronto para ajudar, seja aqui pela plataforma da Udemy ou em suas redes sociais. Recomendo à todos!!!
 8	Luiz Cláudio Silva	Curso excelente! O Willian aborda os assuntos com uma explicação muito clara, simples e, a meu ver, com uma profundidade "na medida" (nem superficial, nem super aprofundado). Também deixa um "caminho" para o caso de o aluno querer se aprofundar em algum detalhe específico e tem se demonstrado sempre solícito tanto nas perguntas aqui na Udemy quanto lá no Slack. Por fim, recomendo também a leitura dos artigos do próprio blog do Willian. Lá ele fala sobre vários assuntos, inclusive tocando em em um ponto que não é citado pela maioria dos profissionais: problemas com saúde (Ex.: depressão). Ganhou um "fã", com ctz :)
+14	Alane Ribeiro	Willian é maravilhoso! Didática excelente, interage muito com os alunos. Gosto muito da didática que ele usa e da forma que ele explica. Parabéns, Professor!
+9	Lianker Lopes	Willian é um otimo professor e seus cursos são extremamente uteis, pois focam em praticas reais de mercado e ele faz isso sem perder a excelência técnica mantendo o uso de boas praticas de codigo.
+10	Michael Costa	Curso de altíssima qualidade. O professor Willian Justen tem uma didática muito boa e nos mostrou várias tecnologias além dessas mencionados no nome do curso em um exemplo real do dia a dia. Estou curtindo tanto o curso, que já até comprei outros dois dele: Aprendendo SVG Do Início ao Avançado e Aprenda a criar sites animados com Greensock, agora só falta começar. 
+11	Anuar Daher Neto	Show! Fiquei impressionado com o domínio que o Willian possui sobre os temas abordados, temas parelelos que surgem ao longo do curso e como ele externa esse domínio passando, com facilidade, tudo que precisando pra ter uma ótima experiência e entender o que é necessário.
 \.
 
 
@@ -2297,6 +2303,12 @@ COPY public.components_page_section_reviews (id, title) FROM stdin;
 --
 
 COPY public.components_page_section_reviews_components (id, field, "order", component_type, component_id, components_page_section_review_id) FROM stdin;
+14	reviews	14	components_page_reviews	14	1
+9	reviews	9	components_page_reviews	9	1
+10	reviews	10	components_page_reviews	10	1
+11	reviews	11	components_page_reviews	11	1
+12	reviews	12	components_page_reviews	12	1
+13	reviews	13	components_page_reviews	13	1
 1	reviews	1	components_page_reviews	1	1
 2	reviews	2	components_page_reviews	2	1
 3	reviews	3	components_page_reviews	3	1
@@ -2373,21 +2385,21 @@ COPY public.components_page_tech_icons (id, title) FROM stdin;
 --
 
 COPY public.core_store (id, key, value, type, environment, tag) FROM stdin;
-15	model_def_page.section-reviews	{"uid":"page.section-reviews","collectionName":"components_page_section_reviews","info":{"name":"sectionReviews","icon":"star","description":""},"options":{"timestamps":false},"attributes":{"title":{"type":"string","required":true},"reviews":{"type":"component","repeatable":true,"component":"page.reviews","required":true,"max":8}}}	object	\N	\N
-18	model_def_page.tech-icon	{"uid":"page.tech-icon","collectionName":"components_page_tech_icons","info":{"name":"techIcon","icon":"tools"},"options":{"timestamps":false},"attributes":{"icon":{"model":"file","via":"related","allowedTypes":["images"],"plugin":"upload","required":true,"pluginOptions":{}},"title":{"type":"string","required":true}}}	object	\N	\N
 2	model_def_page.button	{"uid":"page.button","collectionName":"components_page_buttons","info":{"name":"button","icon":"external-link-alt"},"options":{"timestamps":false},"attributes":{"label":{"type":"string","default":"Comprar","required":true,"maxLength":20},"url":{"type":"string","required":true}}}	object	\N	\N
 3	model_def_page.concepts	{"uid":"page.concepts","collectionName":"components_page_concepts","info":{"name":"concepts","icon":"stream"},"options":{"timestamps":false},"attributes":{"title":{"type":"string","required":true}}}	object	\N	\N
 4	model_def_page.header	{"uid":"page.header","collectionName":"components_page_headers","info":{"name":"header","icon":"heading","description":""},"options":{"timestamps":false},"attributes":{"image":{"model":"file","via":"related","allowedTypes":["images","videos"],"plugin":"upload","required":true,"pluginOptions":{}},"title":{"type":"string","required":true},"description":{"type":"string","required":true},"button":{"type":"component","repeatable":false,"component":"page.button","required":true}}}	object	\N	\N
+18	model_def_page.tech-icon	{"uid":"page.tech-icon","collectionName":"components_page_tech_icons","info":{"name":"techIcon","icon":"tools"},"options":{"timestamps":false},"attributes":{"icon":{"model":"file","via":"related","allowedTypes":["images"],"plugin":"upload","required":true,"pluginOptions":{}},"title":{"type":"string","required":true}}}	object	\N	\N
 5	model_def_page.modules	{"uid":"page.modules","collectionName":"components_page_modules","info":{"name":"modules","icon":"newspaper"},"options":{"timestamps":false},"attributes":{"title":{"type":"string","required":true},"subtitle":{"type":"string","required":true},"description":{"type":"richtext","required":true}}}	object	\N	\N
 7	model_def_page.questions	{"uid":"page.questions","collectionName":"components_page_questions","info":{"name":"questions","icon":"question"},"options":{"timestamps":false},"attributes":{"question":{"type":"text","required":true},"answer":{"type":"richtext","required":true}}}	object	\N	\N
+8	model_def_page.reviews	{"uid":"page.reviews","collectionName":"components_page_reviews","info":{"name":"reviews","icon":"user"},"options":{"timestamps":false},"attributes":{"name":{"type":"string","required":true},"text":{"type":"text","required":true},"photo":{"model":"file","via":"related","allowedTypes":["images"],"plugin":"upload","required":false,"pluginOptions":{}}}}	object	\N	\N
 9	model_def_page.section-about-project	{"uid":"page.section-about-project","collectionName":"components_page_section_about_projects","info":{"name":"sectionAboutProject","icon":"info"},"options":{"timestamps":false},"attributes":{"title":{"type":"string","required":true},"description":{"type":"richtext","required":true},"image":{"model":"file","via":"related","allowedTypes":["images"],"plugin":"upload","required":true,"pluginOptions":{}}}}	object	\N	\N
 10	model_def_page.section-about-us	{"uid":"page.section-about-us","collectionName":"components_page_section_aboutuses","info":{"name":"sectionAboutUs","icon":"user-astronaut"},"options":{"timestamps":false},"attributes":{"title":{"type":"string","required":true},"authors":{"unique":true,"collection":"author","attribute":"author","column":"id","isVirtual":true}}}	object	\N	\N
 11	model_def_page.section-agenda	{"uid":"page.section-agenda","collectionName":"components_page_section_agenda","info":{"name":"sectionAgenda","icon":"calendar-alt"},"options":{"timestamps":false},"attributes":{"title":{"type":"string","required":true},"description":{"type":"richtext","required":true}}}	object	\N	\N
 12	model_def_page.section-concepts	{"uid":"page.section-concepts","collectionName":"components_page_section_concepts","info":{"name":"sectionConcepts","icon":"align-justify"},"options":{"timestamps":false},"attributes":{"title":{"type":"string","required":true},"concepts":{"type":"component","repeatable":true,"component":"page.concepts"}}}	object	\N	\N
 13	model_def_page.section-faq	{"uid":"page.section-faq","collectionName":"components_page_section_faqs","info":{"name":"sectionFaq","icon":"question-circle"},"options":{"timestamps":false},"attributes":{"title":{"type":"string","required":true},"questions":{"type":"component","repeatable":true,"component":"page.questions","required":true,"min":2}}}	object	\N	\N
 14	model_def_page.section-modules	{"uid":"page.section-modules","collectionName":"components_page_section_modules","info":{"name":"sectionModules","icon":"atlas"},"options":{"timestamps":false},"attributes":{"title":{"type":"string","required":true},"modules":{"type":"component","repeatable":true,"component":"page.modules","required":true,"min":2}}}	object	\N	\N
+15	model_def_page.section-reviews	{"uid":"page.section-reviews","collectionName":"components_page_section_reviews","info":{"name":"sectionReviews","icon":"star","description":""},"options":{"timestamps":false},"attributes":{"title":{"type":"string","required":true},"reviews":{"type":"component","repeatable":true,"component":"page.reviews","required":true,"min":2}}}	object	\N	\N
 16	model_def_page.section-tech	{"uid":"page.section-tech","collectionName":"components_page_section_teches","info":{"name":"sectionTech","icon":"toolbox","description":""},"options":{"timestamps":false},"attributes":{"title":{"type":"string","required":true},"techIcons":{"type":"component","repeatable":true,"component":"page.tech-icon","required":true,"max":10,"min":5}}}	object	\N	\N
-8	model_def_page.reviews	{"uid":"page.reviews","collectionName":"components_page_reviews","info":{"name":"reviews","icon":"user"},"options":{"timestamps":false},"attributes":{"name":{"type":"string","required":true},"text":{"type":"text","required":true},"photo":{"model":"file","via":"related","allowedTypes":["images"],"plugin":"upload","required":false,"pluginOptions":{}}}}	object	\N	\N
 17	model_def_page.social-links	{"uid":"page.social-links","collectionName":"components_page_social_links","info":{"name":"socialLinks","icon":"network-wired"},"options":{"timestamps":false},"attributes":{"title":{"type":"enumeration","enum":["Github","Twitter","Dribble","Linkedin","Facebook"],"default":"Twitter","required":true},"url":{"type":"string","required":true}}}	object	\N	\N
 21	model_def_strapi::webhooks	{"uid":"strapi::webhooks","collectionName":"strapi_webhooks","info":{"name":"Strapi webhooks","description":""},"options":{"timestamps":false},"pluginOptions":{"content-manager":{"visible":false},"content-type-builder":{"visible":false}},"attributes":{"name":{"type":"string"},"url":{"type":"text"},"headers":{"type":"json"},"events":{"type":"json"},"enabled":{"type":"boolean"}}}	object	\N	\N
 22	model_def_strapi::permission	{"uid":"strapi::permission","collectionName":"strapi_permission","kind":"collectionType","info":{"name":"Permission","description":""},"options":{"timestamps":["created_at","updated_at"]},"pluginOptions":{"content-manager":{"visible":false},"content-type-builder":{"visible":false}},"attributes":{"action":{"type":"string","minLength":1,"configurable":false,"required":true},"subject":{"type":"string","minLength":1,"configurable":false,"required":false},"properties":{"type":"json","configurable":false,"required":false,"default":{}},"conditions":{"type":"json","configurable":false,"required":false,"default":[]},"role":{"configurable":false,"model":"role","plugin":"admin"}}}	object	\N	\N
@@ -2452,7 +2464,7 @@ COPY public.i18n_locales (id, name, code, created_by, updated_by, created_at, up
 --
 
 COPY public.landing_pages (id, title, description, created_by, updated_by, created_at, updated_at, published_at) FROM stdin;
-1	React Avançado	Crie aplicações reais com NextJS, Strapi, GraphQL e mais!	1	1	2022-04-18 20:25:17.828+00	2022-04-20 12:24:53.593+00	2022-04-18 20:25:17.828+00
+1	React Avançado	Crie aplicações reais com NextJS, Strapi, GraphQL e mais!	1	1	2022-04-18 20:25:17.828+00	2022-04-20 12:49:41.91+00	2022-04-18 20:25:17.828+00
 \.
 
 
@@ -2464,7 +2476,6 @@ COPY public.landing_pages_components (id, field, "order", component_type, compon
 1	header	1	components_page_headers	1	1
 4	sectionAboutProject	1	components_page_section_about_projects	1	1
 5	sectionTech	1	components_page_section_teches	1	1
-2	button	1	components_page_buttons	1	1
 6	sectionConcepts	1	components_page_section_concepts	1	1
 3	sectionModules	1	components_page_section_modules	1	1
 7	sectionAgenda	1	components_page_section_agenda	1	1
@@ -2472,6 +2483,7 @@ COPY public.landing_pages_components (id, field, "order", component_type, compon
 9	sectionAboutUs	1	components_page_section_aboutuses	1	1
 10	sectionReviews	1	components_page_section_reviews	1	1
 11	sectionFaq	1	components_page_section_faqs	1	1
+2	button	1	components_page_buttons	1	1
 \.
 
 
@@ -2490,9 +2502,9 @@ COPY public.strapi_administrator (id, firstname, lastname, username, email, pass
 
 COPY public.strapi_permission (id, action, subject, properties, conditions, role, created_at, updated_at) FROM stdin;
 137	plugins::content-manager.explorer.create	application::landing-page.landing-page	{"fields": ["logo", "header.image", "header.title", "header.description", "header.button.label", "header.button.url", "sectionAboutProject.title", "sectionAboutProject.description", "sectionAboutProject.image", "sectionTech.title", "sectionTech.techIcons.icon", "sectionTech.techIcons.title", "sectionConcepts.title", "sectionConcepts.concepts.title", "sectionModules.title", "sectionModules.modules.title", "sectionModules.modules.subtitle", "sectionModules.modules.description", "sectionAgenda.title", "sectionAgenda.description", "pricingBox.totalPrice", "pricingBox.numberInstallments", "pricingBox.priceInstallment", "pricingBox.benefits", "pricingBox.button.label", "pricingBox.button.url", "sectionAboutUs.title", "sectionAboutUs.authors", "sectionReviews.title", "sectionReviews.reviews.name", "sectionReviews.reviews.text", "sectionReviews.reviews.photo", "sectionFaq.title", "sectionFaq.questions.question", "sectionFaq.questions.answer"]}	[]	1	2022-04-19 16:31:56.926+00	2022-04-19 16:31:56.96+00
-146	plugins::content-manager.explorer.delete	application::author.author	{}	[]	1	2022-04-20 10:33:28.664+00	2022-04-20 10:33:28.683+00
 1	plugins::content-manager.explorer.create	application::author.author	{"fields": ["photo", "name", "role", "socialLinks.title", "socialLinks.url", "description"]}	[]	2	2022-04-18 19:35:52.79+00	2022-04-18 19:35:52.823+00
 3	plugins::content-manager.explorer.read	application::author.author	{"fields": ["photo", "name", "role", "socialLinks.title", "socialLinks.url", "description"]}	[]	2	2022-04-18 19:35:52.791+00	2022-04-18 19:35:52.824+00
+154	plugins::content-manager.explorer.publish	application::landing-page.landing-page	{}	[]	1	2022-04-20 12:44:20.942+00	2022-04-20 12:44:20.964+00
 5	plugins::content-manager.explorer.update	application::author.author	{"fields": ["photo", "name", "role", "socialLinks.title", "socialLinks.url", "description"]}	[]	2	2022-04-18 19:35:52.791+00	2022-04-18 19:35:52.825+00
 7	plugins::content-manager.explorer.delete	application::author.author	{}	[]	2	2022-04-18 19:35:52.792+00	2022-04-18 19:35:52.825+00
 9	plugins::content-manager.explorer.delete	application::landing-page.landing-page	{}	[]	2	2022-04-18 19:35:52.793+00	2022-04-18 19:35:52.832+00
@@ -2520,7 +2532,6 @@ COPY public.strapi_permission (id, action, subject, properties, conditions, role
 77	admin::users.update	\N	{}	[]	1	2022-04-18 19:35:53.442+00	2022-04-18 19:35:53.471+00
 138	plugins::content-manager.explorer.read	application::landing-page.landing-page	{"fields": ["logo", "header.image", "header.title", "header.description", "header.button.label", "header.button.url", "sectionAboutProject.title", "sectionAboutProject.description", "sectionAboutProject.image", "sectionTech.title", "sectionTech.techIcons.icon", "sectionTech.techIcons.title", "sectionConcepts.title", "sectionConcepts.concepts.title", "sectionModules.title", "sectionModules.modules.title", "sectionModules.modules.subtitle", "sectionModules.modules.description", "sectionAgenda.title", "sectionAgenda.description", "pricingBox.totalPrice", "pricingBox.numberInstallments", "pricingBox.priceInstallment", "pricingBox.benefits", "pricingBox.button.label", "pricingBox.button.url", "sectionAboutUs.title", "sectionAboutUs.authors", "sectionReviews.title", "sectionReviews.reviews.name", "sectionReviews.reviews.text", "sectionReviews.reviews.photo", "sectionFaq.title", "sectionFaq.questions.question", "sectionFaq.questions.answer"]}	[]	1	2022-04-19 16:31:56.927+00	2022-04-19 16:31:56.96+00
 6	plugins::content-manager.explorer.update	application::landing-page.landing-page	{"fields": ["logo", "header.image", "header.title", "header.description", "sectionAboutProject.title", "sectionAboutProject.description", "sectionAboutProject.image", "sectionTech.title", "sectionTech.techIcons.icon", "sectionTech.techIcons.title", "sectionConcepts.title", "sectionConcepts.concepts.title", "sectionModules.title", "sectionModules.modules.title", "sectionModules.modules.subtitle", "sectionModules.modules.description", "sectionAgenda.title", "sectionAgenda.description", "pricingBox.totalPrice", "pricingBox.numberInstallments", "pricingBox.priceInstallment", "pricingBox.benefits", "pricingBox.button.label", "pricingBox.button.url", "sectionAboutUs.title", "sectionAboutUs.authors", "sectionReviews.title", "sectionReviews.reviews.name", "sectionReviews.reviews.text", "sectionReviews.reviews.photo", "sectionFaq.title", "sectionFaq.questions.question", "sectionFaq.questions.answer", "header.button.label", "header.button.url"]}	[]	2	2022-04-18 19:35:52.792+00	2022-04-19 16:31:57.227+00
-145	plugins::content-manager.explorer.delete	application::landing-page.landing-page	{}	[]	1	2022-04-20 10:33:28.664+00	2022-04-20 10:33:28.683+00
 14	plugins::upload.assets.download	\N	{}	[]	2	2022-04-18 19:35:52.876+00	2022-04-18 19:35:52.897+00
 17	plugins::content-manager.explorer.read	application::author.author	{"fields": ["photo", "name", "role", "socialLinks.title", "socialLinks.url", "description"]}	["admin::is-creator"]	3	2022-04-18 19:35:52.93+00	2022-04-18 19:35:52.957+00
 27	plugins::upload.assets.download	\N	{}	[]	3	2022-04-18 19:35:53.007+00	2022-04-18 19:35:53.017+00
@@ -2530,7 +2541,6 @@ COPY public.strapi_permission (id, action, subject, properties, conditions, role
 71	admin::webhooks.create	\N	{}	[]	1	2022-04-18 19:35:53.424+00	2022-04-18 19:35:53.458+00
 139	plugins::content-manager.explorer.update	application::landing-page.landing-page	{"fields": ["logo", "header.image", "header.title", "header.description", "header.button.label", "header.button.url", "sectionAboutProject.title", "sectionAboutProject.description", "sectionAboutProject.image", "sectionTech.title", "sectionTech.techIcons.icon", "sectionTech.techIcons.title", "sectionConcepts.title", "sectionConcepts.concepts.title", "sectionModules.title", "sectionModules.modules.title", "sectionModules.modules.subtitle", "sectionModules.modules.description", "sectionAgenda.title", "sectionAgenda.description", "pricingBox.totalPrice", "pricingBox.numberInstallments", "pricingBox.priceInstallment", "pricingBox.benefits", "pricingBox.button.label", "pricingBox.button.url", "sectionAboutUs.title", "sectionAboutUs.authors", "sectionReviews.title", "sectionReviews.reviews.name", "sectionReviews.reviews.text", "sectionReviews.reviews.photo", "sectionFaq.title", "sectionFaq.questions.question", "sectionFaq.questions.answer"]}	[]	1	2022-04-19 16:31:56.927+00	2022-04-19 16:31:56.961+00
 2	plugins::content-manager.explorer.create	application::landing-page.landing-page	{"fields": ["logo", "header.image", "header.title", "header.description", "sectionAboutProject.title", "sectionAboutProject.description", "sectionAboutProject.image", "sectionTech.title", "sectionTech.techIcons.icon", "sectionTech.techIcons.title", "sectionConcepts.title", "sectionConcepts.concepts.title", "sectionModules.title", "sectionModules.modules.title", "sectionModules.modules.subtitle", "sectionModules.modules.description", "sectionAgenda.title", "sectionAgenda.description", "pricingBox.totalPrice", "pricingBox.numberInstallments", "pricingBox.priceInstallment", "pricingBox.benefits", "pricingBox.button.label", "pricingBox.button.url", "sectionAboutUs.title", "sectionAboutUs.authors", "sectionReviews.title", "sectionReviews.reviews.name", "sectionReviews.reviews.text", "sectionReviews.reviews.photo", "sectionFaq.title", "sectionFaq.questions.question", "sectionFaq.questions.answer", "header.button.label", "header.button.url"]}	[]	2	2022-04-18 19:35:52.791+00	2022-04-19 16:31:57.228+00
-147	plugins::content-manager.explorer.delete	plugins::users-permissions.user	{}	[]	1	2022-04-20 10:33:28.665+00	2022-04-20 10:33:28.683+00
 15	plugins::upload.assets.copy-link	\N	{}	[]	2	2022-04-18 19:35:52.882+00	2022-04-18 19:35:52.901+00
 19	plugins::content-manager.explorer.create	application::author.author	{"fields": ["photo", "name", "role", "socialLinks.title", "socialLinks.url", "description"]}	["admin::is-creator"]	3	2022-04-18 19:35:52.932+00	2022-04-18 19:35:52.958+00
 28	plugins::upload.assets.copy-link	\N	{}	[]	3	2022-04-18 19:35:53.007+00	2022-04-18 19:35:53.019+00
@@ -2538,7 +2548,6 @@ COPY public.strapi_permission (id, action, subject, properties, conditions, role
 55	plugins::content-manager.single-types.configure-view	\N	{}	[]	1	2022-04-18 19:35:53.275+00	2022-04-18 19:35:53.306+00
 65	plugins::users-permissions.email-templates.update	\N	{}	[]	1	2022-04-18 19:35:53.358+00	2022-04-18 19:35:53.385+00
 75	admin::users.create	\N	{}	[]	1	2022-04-18 19:35:53.434+00	2022-04-18 19:35:53.465+00
-148	plugins::content-manager.explorer.publish	application::author.author	{}	[]	1	2022-04-20 10:33:28.665+00	2022-04-20 10:33:28.691+00
 26	plugins::upload.assets.update	\N	{}	["admin::is-creator"]	3	2022-04-18 19:35:53.006+00	2022-04-18 19:35:53.017+00
 31	plugins::content-manager.explorer.create	plugins::users-permissions.user	{"fields": ["username", "email", "provider", "password", "resetPasswordToken", "confirmationToken", "confirmed", "blocked", "role"]}	[]	1	2022-04-18 19:35:53.106+00	2022-04-18 19:35:53.137+00
 43	plugins::content-type-builder.read	\N	{}	[]	1	2022-04-18 19:35:53.193+00	2022-04-18 19:35:53.218+00
@@ -2547,28 +2556,31 @@ COPY public.strapi_permission (id, action, subject, properties, conditions, role
 69	admin::marketplace.plugins.install	\N	{}	[]	1	2022-04-18 19:35:53.423+00	2022-04-18 19:35:53.452+00
 79	admin::roles.create	\N	{}	[]	1	2022-04-18 19:35:53.505+00	2022-04-18 19:35:53.524+00
 16	plugins::content-manager.explorer.read	application::landing-page.landing-page	{"fields": ["logo", "header.image", "header.title", "header.description", "sectionAboutProject.title", "sectionAboutProject.description", "sectionAboutProject.image", "sectionTech.title", "sectionTech.techIcons.icon", "sectionTech.techIcons.title", "sectionConcepts.title", "sectionConcepts.concepts.title", "sectionModules.title", "sectionModules.modules.title", "sectionModules.modules.subtitle", "sectionModules.modules.description", "sectionAgenda.title", "sectionAgenda.description", "pricingBox.totalPrice", "pricingBox.numberInstallments", "pricingBox.priceInstallment", "pricingBox.benefits", "pricingBox.button.label", "pricingBox.button.url", "sectionAboutUs.title", "sectionAboutUs.authors", "sectionReviews.title", "sectionReviews.reviews.name", "sectionReviews.reviews.text", "sectionReviews.reviews.photo", "sectionFaq.title", "sectionFaq.questions.question", "sectionFaq.questions.answer", "header.button.label", "header.button.url"]}	["admin::is-creator"]	3	2022-04-18 19:35:52.93+00	2022-04-19 16:31:57.236+00
-149	plugins::content-manager.explorer.publish	application::landing-page.landing-page	{}	[]	1	2022-04-20 10:33:28.671+00	2022-04-20 10:33:28.69+00
 46	plugins::upload.assets.create	\N	{}	[]	1	2022-04-18 19:35:53.198+00	2022-04-18 19:35:53.225+00
 54	plugins::i18n.locale.delete	\N	{}	[]	1	2022-04-18 19:35:53.274+00	2022-04-18 19:35:53.306+00
 63	plugins::users-permissions.providers.update	\N	{}	[]	1	2022-04-18 19:35:53.357+00	2022-04-18 19:35:53.384+00
 74	admin::webhooks.delete	\N	{}	[]	1	2022-04-18 19:35:53.433+00	2022-04-18 19:35:53.464+00
 4	plugins::content-manager.explorer.read	application::landing-page.landing-page	{"fields": ["logo", "header.image", "header.title", "header.description", "sectionAboutProject.title", "sectionAboutProject.description", "sectionAboutProject.image", "sectionTech.title", "sectionTech.techIcons.icon", "sectionTech.techIcons.title", "sectionConcepts.title", "sectionConcepts.concepts.title", "sectionModules.title", "sectionModules.modules.title", "sectionModules.modules.subtitle", "sectionModules.modules.description", "sectionAgenda.title", "sectionAgenda.description", "pricingBox.totalPrice", "pricingBox.numberInstallments", "pricingBox.priceInstallment", "pricingBox.benefits", "pricingBox.button.label", "pricingBox.button.url", "sectionAboutUs.title", "sectionAboutUs.authors", "sectionReviews.title", "sectionReviews.reviews.name", "sectionReviews.reviews.text", "sectionReviews.reviews.photo", "sectionFaq.title", "sectionFaq.questions.question", "sectionFaq.questions.answer", "header.button.label", "header.button.url"]}	[]	2	2022-04-18 19:35:52.791+00	2022-04-19 16:31:57.235+00
+150	plugins::content-manager.explorer.delete	application::landing-page.landing-page	{}	[]	1	2022-04-20 12:44:20.933+00	2022-04-20 12:44:20.956+00
 37	plugins::content-manager.explorer.update	plugins::users-permissions.user	{"fields": ["username", "email", "provider", "password", "resetPasswordToken", "confirmationToken", "confirmed", "blocked", "role"]}	[]	1	2022-04-18 19:35:53.115+00	2022-04-18 19:35:53.149+00
 47	plugins::upload.assets.update	\N	{}	[]	1	2022-04-18 19:35:53.199+00	2022-04-18 19:35:53.225+00
 57	plugins::content-manager.components.configure-layout	\N	{}	[]	1	2022-04-18 19:35:53.284+00	2022-04-18 19:35:53.314+00
 66	plugins::users-permissions.advanced-settings.read	\N	{}	[]	1	2022-04-18 19:35:53.364+00	2022-04-18 19:35:53.391+00
 76	admin::users.read	\N	{}	[]	1	2022-04-18 19:35:53.434+00	2022-04-18 19:35:53.465+00
 21	plugins::content-manager.explorer.update	application::landing-page.landing-page	{"fields": ["logo", "header.image", "header.title", "header.description", "sectionAboutProject.title", "sectionAboutProject.description", "sectionAboutProject.image", "sectionTech.title", "sectionTech.techIcons.icon", "sectionTech.techIcons.title", "sectionConcepts.title", "sectionConcepts.concepts.title", "sectionModules.title", "sectionModules.modules.title", "sectionModules.modules.subtitle", "sectionModules.modules.description", "sectionAgenda.title", "sectionAgenda.description", "pricingBox.totalPrice", "pricingBox.numberInstallments", "pricingBox.priceInstallment", "pricingBox.benefits", "pricingBox.button.label", "pricingBox.button.url", "sectionAboutUs.title", "sectionAboutUs.authors", "sectionReviews.title", "sectionReviews.reviews.name", "sectionReviews.reviews.text", "sectionReviews.reviews.photo", "sectionFaq.title", "sectionFaq.questions.question", "sectionFaq.questions.answer", "header.button.label", "header.button.url"]}	["admin::is-creator"]	3	2022-04-18 19:35:52.932+00	2022-04-19 16:31:57.244+00
+151	plugins::content-manager.explorer.delete	application::author.author	{}	[]	1	2022-04-20 12:44:20.934+00	2022-04-20 12:44:20.957+00
 22	plugins::content-manager.explorer.delete	application::author.author	{}	["admin::is-creator"]	3	2022-04-18 19:35:52.933+00	2022-04-18 19:35:52.965+00
 32	plugins::content-manager.explorer.read	application::author.author	{"fields": ["photo", "name", "role", "socialLinks.title", "socialLinks.url", "description"]}	[]	1	2022-04-18 19:35:53.107+00	2022-04-18 19:35:53.138+00
 52	plugins::i18n.locale.read	\N	{}	[]	1	2022-04-18 19:35:53.269+00	2022-04-18 19:35:53.298+00
 61	plugins::users-permissions.roles.delete	\N	{}	[]	1	2022-04-18 19:35:53.351+00	2022-04-18 19:35:53.376+00
 70	admin::marketplace.plugins.uninstall	\N	{}	[]	1	2022-04-18 19:35:53.424+00	2022-04-18 19:35:53.452+00
 81	admin::roles.update	\N	{}	[]	1	2022-04-18 19:35:53.508+00	2022-04-18 19:35:53.523+00
+152	plugins::content-manager.explorer.delete	plugins::users-permissions.user	{}	[]	1	2022-04-20 12:44:20.934+00	2022-04-20 12:44:20.957+00
 48	plugins::upload.assets.download	\N	{}	[]	1	2022-04-18 19:35:53.205+00	2022-04-18 19:35:53.234+00
 58	plugins::users-permissions.roles.create	\N	{}	[]	1	2022-04-18 19:35:53.29+00	2022-04-18 19:35:53.322+00
 68	admin::marketplace.read	\N	{}	[]	1	2022-04-18 19:35:53.377+00	2022-04-18 19:35:53.406+00
 78	admin::users.delete	\N	{}	[]	1	2022-04-18 19:35:53.465+00	2022-04-18 19:35:53.5+00
+153	plugins::content-manager.explorer.publish	application::author.author	{}	[]	1	2022-04-20 12:44:20.934+00	2022-04-20 12:44:20.964+00
 \.
 
 
@@ -2640,27 +2652,27 @@ COPY public.upload_file_morph (id, upload_file_id, related_id, related_type, fie
 71	14	1	authors	photo	1
 72	15	2	authors	photo	1
 73	16	3	authors	photo	1
-461	2	1	components_page_headers	image	1
-462	3	1	components_page_section_about_projects	image	1
-463	4	1	components_page_tech_icons	icon	1
-464	5	2	components_page_tech_icons	icon	1
-465	6	3	components_page_tech_icons	icon	1
-466	7	4	components_page_tech_icons	icon	1
-467	8	5	components_page_tech_icons	icon	1
-468	9	6	components_page_tech_icons	icon	1
-469	10	7	components_page_tech_icons	icon	1
-470	11	8	components_page_tech_icons	icon	1
-471	12	9	components_page_tech_icons	icon	1
-472	13	10	components_page_tech_icons	icon	1
-473	17	1	components_page_reviews	photo	1
-474	18	2	components_page_reviews	photo	1
-475	19	3	components_page_reviews	photo	1
-476	20	4	components_page_reviews	photo	1
-477	21	5	components_page_reviews	photo	1
-478	22	6	components_page_reviews	photo	1
-479	23	7	components_page_reviews	photo	1
-480	24	8	components_page_reviews	photo	1
-481	1	1	landing_pages	logo	1
+587	2	1	components_page_headers	image	1
+588	3	1	components_page_section_about_projects	image	1
+589	4	1	components_page_tech_icons	icon	1
+590	5	2	components_page_tech_icons	icon	1
+591	6	3	components_page_tech_icons	icon	1
+592	7	4	components_page_tech_icons	icon	1
+593	8	5	components_page_tech_icons	icon	1
+594	9	6	components_page_tech_icons	icon	1
+595	10	7	components_page_tech_icons	icon	1
+596	11	8	components_page_tech_icons	icon	1
+597	12	9	components_page_tech_icons	icon	1
+598	13	10	components_page_tech_icons	icon	1
+599	17	1	components_page_reviews	photo	1
+600	18	2	components_page_reviews	photo	1
+601	19	3	components_page_reviews	photo	1
+602	20	4	components_page_reviews	photo	1
+603	21	5	components_page_reviews	photo	1
+604	22	6	components_page_reviews	photo	1
+605	23	7	components_page_reviews	photo	1
+606	24	8	components_page_reviews	photo	1
+607	1	1	landing_pages	logo	1
 \.
 
 
@@ -2954,7 +2966,7 @@ SELECT pg_catalog.setval('public.components_page_questions_id_seq', 7, true);
 -- Name: components_page_reviews_id_seq; Type: SEQUENCE SET; Schema: public; Owner: strapi
 --
 
-SELECT pg_catalog.setval('public.components_page_reviews_id_seq', 8, true);
+SELECT pg_catalog.setval('public.components_page_reviews_id_seq', 14, true);
 
 
 --
@@ -3031,7 +3043,7 @@ SELECT pg_catalog.setval('public.components_page_section_modules_id_seq', 1, tru
 -- Name: components_page_section_reviews_components_id_seq; Type: SEQUENCE SET; Schema: public; Owner: strapi
 --
 
-SELECT pg_catalog.setval('public.components_page_section_reviews_components_id_seq', 8, true);
+SELECT pg_catalog.setval('public.components_page_section_reviews_components_id_seq', 14, true);
 
 
 --
@@ -3108,7 +3120,7 @@ SELECT pg_catalog.setval('public.strapi_administrator_id_seq', 1, true);
 -- Name: strapi_permission_id_seq; Type: SEQUENCE SET; Schema: public; Owner: strapi
 --
 
-SELECT pg_catalog.setval('public.strapi_permission_id_seq', 149, true);
+SELECT pg_catalog.setval('public.strapi_permission_id_seq', 154, true);
 
 
 --
@@ -3143,7 +3155,7 @@ SELECT pg_catalog.setval('public.upload_file_id_seq', 24, true);
 -- Name: upload_file_morph_id_seq; Type: SEQUENCE SET; Schema: public; Owner: strapi
 --
 
-SELECT pg_catalog.setval('public.upload_file_morph_id_seq', 481, true);
+SELECT pg_catalog.setval('public.upload_file_morph_id_seq', 607, true);
 
 
 --
