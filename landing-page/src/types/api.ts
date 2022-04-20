@@ -18,7 +18,17 @@ export type HeaderProps = {
   }
 }
 
+export type AboutProjectProps = {
+  title: string
+  description: string
+  image: {
+    alternativeText: string
+    url: string
+  }
+}
+
 export type LandingPageProps = {
   logo: LogoProps
   header: HeaderProps
+  aboutProject: AboutProjectProps
 }
