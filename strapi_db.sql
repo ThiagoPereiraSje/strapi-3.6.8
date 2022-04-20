@@ -23,6 +23,7 @@ ALTER TABLE IF EXISTS ONLY public.components_page_section_modules_components DRO
 ALTER TABLE IF EXISTS ONLY public.components_page_section_faqs_components DROP CONSTRAINT IF EXISTS components_page_section_faq_id_fk;
 ALTER TABLE IF EXISTS ONLY public.components_page_section_concepts_components DROP CONSTRAINT IF EXISTS components_page_section_concept_id_fk;
 ALTER TABLE IF EXISTS ONLY public.components_page_price_boxes_components DROP CONSTRAINT IF EXISTS components_page_price_box_id_fk;
+ALTER TABLE IF EXISTS ONLY public.components_page_headers_components DROP CONSTRAINT IF EXISTS components_page_header_id_fk;
 ALTER TABLE IF EXISTS ONLY public.authors_components DROP CONSTRAINT IF EXISTS author_id_fk;
 ALTER TABLE IF EXISTS ONLY public."users-permissions_user" DROP CONSTRAINT IF EXISTS "users-permissions_user_username_unique";
 ALTER TABLE IF EXISTS ONLY public."users-permissions_user" DROP CONSTRAINT IF EXISTS "users-permissions_user_pkey";
@@ -66,6 +67,7 @@ ALTER TABLE IF EXISTS ONLY public.components_page_price_boxes DROP CONSTRAINT IF
 ALTER TABLE IF EXISTS ONLY public.components_page_price_boxes_components DROP CONSTRAINT IF EXISTS components_page_price_boxes_components_pkey;
 ALTER TABLE IF EXISTS ONLY public.components_page_modules DROP CONSTRAINT IF EXISTS components_page_modules_pkey;
 ALTER TABLE IF EXISTS ONLY public.components_page_headers DROP CONSTRAINT IF EXISTS components_page_headers_pkey;
+ALTER TABLE IF EXISTS ONLY public.components_page_headers_components DROP CONSTRAINT IF EXISTS components_page_headers_components_pkey;
 ALTER TABLE IF EXISTS ONLY public.components_page_concepts DROP CONSTRAINT IF EXISTS components_page_concepts_pkey;
 ALTER TABLE IF EXISTS ONLY public.components_page_buttons DROP CONSTRAINT IF EXISTS components_page_buttons_pkey;
 ALTER TABLE IF EXISTS ONLY public.authors DROP CONSTRAINT IF EXISTS authors_pkey;
@@ -105,6 +107,7 @@ ALTER TABLE IF EXISTS public.components_page_questions ALTER COLUMN id DROP DEFA
 ALTER TABLE IF EXISTS public.components_page_price_boxes_components ALTER COLUMN id DROP DEFAULT;
 ALTER TABLE IF EXISTS public.components_page_price_boxes ALTER COLUMN id DROP DEFAULT;
 ALTER TABLE IF EXISTS public.components_page_modules ALTER COLUMN id DROP DEFAULT;
+ALTER TABLE IF EXISTS public.components_page_headers_components ALTER COLUMN id DROP DEFAULT;
 ALTER TABLE IF EXISTS public.components_page_headers ALTER COLUMN id DROP DEFAULT;
 ALTER TABLE IF EXISTS public.components_page_concepts ALTER COLUMN id DROP DEFAULT;
 ALTER TABLE IF EXISTS public.components_page_buttons ALTER COLUMN id DROP DEFAULT;
@@ -181,6 +184,8 @@ DROP TABLE IF EXISTS public.components_page_price_boxes;
 DROP SEQUENCE IF EXISTS public.components_page_modules_id_seq;
 DROP TABLE IF EXISTS public.components_page_modules;
 DROP SEQUENCE IF EXISTS public.components_page_headers_id_seq;
+DROP SEQUENCE IF EXISTS public.components_page_headers_components_id_seq;
+DROP TABLE IF EXISTS public.components_page_headers_components;
 DROP TABLE IF EXISTS public.components_page_headers;
 DROP SEQUENCE IF EXISTS public.components_page_concepts_id_seq;
 DROP TABLE IF EXISTS public.components_page_concepts;
@@ -203,11 +208,11 @@ CREATE TABLE public.authors (
     name character varying(255),
     role character varying(255),
     description text,
-    published_at timestamp with time zone,
     created_by integer,
     updated_by integer,
     created_at timestamp with time zone DEFAULT CURRENT_TIMESTAMP,
-    updated_at timestamp with time zone DEFAULT CURRENT_TIMESTAMP
+    updated_at timestamp with time zone DEFAULT CURRENT_TIMESTAMP,
+    published_at timestamp with time zone
 );
 
 
@@ -347,11 +352,51 @@ ALTER SEQUENCE public.components_page_concepts_id_seq OWNED BY public.components
 --
 
 CREATE TABLE public.components_page_headers (
-    id integer NOT NULL
+    id integer NOT NULL,
+    title character varying(255),
+    description character varying(255)
 );
 
 
 ALTER TABLE public.components_page_headers OWNER TO strapi;
+
+--
+-- Name: components_page_headers_components; Type: TABLE; Schema: public; Owner: strapi
+--
+
+CREATE TABLE public.components_page_headers_components (
+    id integer NOT NULL,
+    field character varying(255) NOT NULL,
+    "order" integer NOT NULL,
+    component_type character varying(255) NOT NULL,
+    component_id integer NOT NULL,
+    components_page_header_id integer NOT NULL
+);
+
+
+ALTER TABLE public.components_page_headers_components OWNER TO strapi;
+
+--
+-- Name: components_page_headers_components_id_seq; Type: SEQUENCE; Schema: public; Owner: strapi
+--
+
+CREATE SEQUENCE public.components_page_headers_components_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.components_page_headers_components_id_seq OWNER TO strapi;
+
+--
+-- Name: components_page_headers_components_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: strapi
+--
+
+ALTER SEQUENCE public.components_page_headers_components_id_seq OWNED BY public.components_page_headers_components.id;
+
 
 --
 -- Name: components_page_headers_id_seq; Type: SEQUENCE; Schema: public; Owner: strapi
@@ -1209,11 +1254,11 @@ CREATE TABLE public.landing_pages (
     id integer NOT NULL,
     title character varying(255),
     description text,
-    published_at timestamp with time zone,
     created_by integer,
     updated_by integer,
     created_at timestamp with time zone DEFAULT CURRENT_TIMESTAMP,
-    updated_at timestamp with time zone DEFAULT CURRENT_TIMESTAMP
+    updated_at timestamp with time zone DEFAULT CURRENT_TIMESTAMP,
+    published_at timestamp with time zone
 );
 
 
@@ -1723,6 +1768,13 @@ ALTER TABLE ONLY public.components_page_headers ALTER COLUMN id SET DEFAULT next
 
 
 --
+-- Name: components_page_headers_components id; Type: DEFAULT; Schema: public; Owner: strapi
+--
+
+ALTER TABLE ONLY public.components_page_headers_components ALTER COLUMN id SET DEFAULT nextval('public.components_page_headers_components_id_seq'::regclass);
+
+
+--
 -- Name: components_page_modules id; Type: DEFAULT; Schema: public; Owner: strapi
 --
 
@@ -1971,10 +2023,10 @@ ALTER TABLE ONLY public."users-permissions_user" ALTER COLUMN id SET DEFAULT nex
 -- Data for Name: authors; Type: TABLE DATA; Schema: public; Owner: strapi
 --
 
-COPY public.authors (id, name, role, description, published_at, created_by, updated_by, created_at, updated_at) FROM stdin;
-1	Willian Justen	Instrutor	Desenvolvedor Front-end há mais de 10 anos, tendo trabalhado em grandes empresas como Toptal, Globo.com e Huge. Tenho um blog com mais de 200 mil views por mês, além de ter diversos cursos na Udemy, alcançando a incrível marca de mais de 200 mil alunos!	\N	1	1	2022-04-19 11:20:25.565+00	2022-04-19 11:20:25.602+00
-2	Guilherme Louro	Instrutor	Desenvolvedor Fullstack há muitos anos, com conhecimento em diversas linguagens de programação. Já liderou grandes projetos e trabalha atualmente na Personare, um dos maiores portais de autoconhecimento do Brasil. Nas horas vagas é o criador e mantenedor do Netfla, site de notícias do Flamengo com mais de meio milhão de views por mês!	\N	1	1	2022-04-19 11:22:48.505+00	2022-04-19 11:22:48.541+00
-3	Marcos Oliveira	Designer	Front-End e UI Designer há alguns anos. Atualmente trabalha na Lukin Co. Já participou de diversos tipos de projetos, na área da saúde, streaming e varejo. Sempre dividido entre design e programação. No tempo livre sempre está envolvido com a comunidade, organizando eventos e meetups.	\N	1	1	2022-04-19 11:25:26.573+00	2022-04-19 11:25:26.617+00
+COPY public.authors (id, name, role, description, created_by, updated_by, created_at, updated_at, published_at) FROM stdin;
+1	Willian Justen	Instrutor	Desenvolvedor Front-end há mais de 10 anos, tendo trabalhado em grandes empresas como Toptal, Globo.com e Huge. Tenho um blog com mais de 200 mil views por mês, além de ter diversos cursos na Udemy, alcançando a incrível marca de mais de 200 mil alunos!	1	1	2022-04-19 11:20:25.565+00	2022-04-19 14:02:36.472+00	2022-04-19 11:20:25.565+00
+2	Guilherme Louro	Instrutor	Desenvolvedor Fullstack há muitos anos, com conhecimento em diversas linguagens de programação. Já liderou grandes projetos e trabalha atualmente na Personare, um dos maiores portais de autoconhecimento do Brasil. Nas horas vagas é o criador e mantenedor do Netfla, site de notícias do Flamengo com mais de meio milhão de views por mês!	1	1	2022-04-19 11:22:48.505+00	2022-04-19 14:03:02.007+00	2022-04-19 11:22:48.505+00
+3	Marcos Oliveira	Designer	Front-End e UI Designer há alguns anos. Atualmente trabalha na Lukin Co. Já participou de diversos tipos de projetos, na área da saúde, streaming e varejo. Sempre dividido entre design e programação. No tempo livre sempre está envolvido com a comunidade, organizando eventos e meetups.	1	1	2022-04-19 11:25:26.573+00	2022-04-19 14:03:08.191+00	2022-04-19 11:25:26.573+00
 \.
 
 
@@ -1999,6 +2051,7 @@ COPY public.authors_components (id, field, "order", component_type, component_id
 
 COPY public.components_page_buttons (id, label, url) FROM stdin;
 1	Comprar	https://www.udemy.com/course/react-avancado/?couponCode=PROMOABR22
+3	Comprar	https://www.udemy.com/course/react-avancado/?couponCode=PROMOABR22
 2	Comprar o curso	https://www.udemy.com/course/react-avancado/?couponCode=PROMOABR22
 \.
 
@@ -2033,8 +2086,17 @@ COPY public.components_page_concepts (id, title) FROM stdin;
 -- Data for Name: components_page_headers; Type: TABLE DATA; Schema: public; Owner: strapi
 --
 
-COPY public.components_page_headers (id) FROM stdin;
-1
+COPY public.components_page_headers (id, title, description) FROM stdin;
+1	React Avançado	Crie aplicações reais com NextJS, Strapi, GraphQL e mais!
+\.
+
+
+--
+-- Data for Name: components_page_headers_components; Type: TABLE DATA; Schema: public; Owner: strapi
+--
+
+COPY public.components_page_headers_components (id, field, "order", component_type, component_id, components_page_header_id) FROM stdin;
+1	button	1	components_page_buttons	3	1
 \.
 
 
@@ -2075,13 +2137,13 @@ COPY public.components_page_price_boxes_components (id, field, "order", componen
 --
 
 COPY public.components_page_questions (id, question, answer) FROM stdin;
-7	Eu tenho outra dúvida!	<p><span style="background-color:rgb(255,255,255);color:rgb(3,5,23);">Sem problemas! Você pode acessar qualquer uma das </span><a href="https://willianjusten.com.br/about">minhas redes sociais</a><span style="background-color:rgb(255,255,255);color:rgb(3,5,23);"> ou entrar no </span><a href="http://bit.ly/slack-will">slack do nosso curso.</a></p>
 1	O que preciso saber para o curso?	<p><span style="background-color:rgb(255,255,255);color:rgb(3,5,23);">Um conhecimento básico de JavaScript/React é necessário para maior entendimento do curso, mas todo o conteúdo será explicado em detalhes e todas as perguntas/dúvidas serão respondidas.</span></p>
 2	Onde os vídeos serão publicados?	<p><span style="background-color:rgb(255,255,255);color:rgb(3,5,23);">Os vídeos serão publicados na Udemy, com o mesmo funcionamento que já existe, vídeos offline, autoplay, acelerar em 2x, aplicativo nativo e mais.</span></p>
 3	Quanto tempo tenho para fazer o curso?	<p style="margin-left:0px;">O curso é vitalício, faça quantas vezes quiser e quando quiser, nada de bloqueios ou pressa.</p>
 4	Esse curso tem certificado?	<p><span style="background-color:rgb(255,255,255);color:rgb(3,5,23);">Sim, o curso terá certificado e você poderá baixá-lo diretamente da Udemy ao término do curso.</span></p>
 5	Quais outros cursos você tem?	<p><span style="background-color:rgb(255,255,255);color:rgb(3,5,23);">Tenho alguns cursos gratuitos e pagos, você pode acessar todos os cursos </span><a href="https://willianjusten.com.br/cursos">nesse link.</a></p>
 6	Posso usar o projeto para o meu Portfólio?	<p><span style="background-color:rgb(255,255,255);color:rgb(3,5,23);">Definitivamente! A ideia é que vocês tenham um projeto de verdade que possam utilizar como bem entenderem.</span></p>
+7	Eu tenho outra dúvida!	<p><span style="background-color:rgb(255,255,255);color:rgb(3,5,23);">Sem problemas! Você pode acessar qualquer uma das </span><a href="https://willianjusten.com.br/about">minhas redes sociais</a><span style="background-color:rgb(255,255,255);color:rgb(3,5,23);"> ou entrar no </span><a href="http://bit.ly/slack-will">slack do nosso curso.</a></p>
 \.
 
 
@@ -2188,13 +2250,13 @@ COPY public.components_page_section_faqs (id, title) FROM stdin;
 --
 
 COPY public.components_page_section_faqs_components (id, field, "order", component_type, component_id, components_page_section_faq_id) FROM stdin;
-7	questions	7	components_page_questions	7	1
 1	questions	1	components_page_questions	1	1
 2	questions	2	components_page_questions	2	1
 3	questions	3	components_page_questions	3	1
 4	questions	4	components_page_questions	4	1
 5	questions	5	components_page_questions	5	1
 6	questions	6	components_page_questions	6	1
+7	questions	7	components_page_questions	7	1
 \.
 
 
@@ -2311,33 +2373,32 @@ COPY public.components_page_tech_icons (id, title) FROM stdin;
 --
 
 COPY public.core_store (id, key, value, type, environment, tag) FROM stdin;
+15	model_def_page.section-reviews	{"uid":"page.section-reviews","collectionName":"components_page_section_reviews","info":{"name":"sectionReviews","icon":"star","description":""},"options":{"timestamps":false},"attributes":{"title":{"type":"string","required":true},"reviews":{"type":"component","repeatable":true,"component":"page.reviews","required":true,"max":8}}}	object	\N	\N
+18	model_def_page.tech-icon	{"uid":"page.tech-icon","collectionName":"components_page_tech_icons","info":{"name":"techIcon","icon":"tools"},"options":{"timestamps":false},"attributes":{"icon":{"model":"file","via":"related","allowedTypes":["images"],"plugin":"upload","required":true,"pluginOptions":{}},"title":{"type":"string","required":true}}}	object	\N	\N
+2	model_def_page.button	{"uid":"page.button","collectionName":"components_page_buttons","info":{"name":"button","icon":"external-link-alt"},"options":{"timestamps":false},"attributes":{"label":{"type":"string","default":"Comprar","required":true,"maxLength":20},"url":{"type":"string","required":true}}}	object	\N	\N
+3	model_def_page.concepts	{"uid":"page.concepts","collectionName":"components_page_concepts","info":{"name":"concepts","icon":"stream"},"options":{"timestamps":false},"attributes":{"title":{"type":"string","required":true}}}	object	\N	\N
+4	model_def_page.header	{"uid":"page.header","collectionName":"components_page_headers","info":{"name":"header","icon":"heading","description":""},"options":{"timestamps":false},"attributes":{"image":{"model":"file","via":"related","allowedTypes":["images","videos"],"plugin":"upload","required":true,"pluginOptions":{}},"title":{"type":"string","required":true},"description":{"type":"string","required":true},"button":{"type":"component","repeatable":false,"component":"page.button","required":true}}}	object	\N	\N
+5	model_def_page.modules	{"uid":"page.modules","collectionName":"components_page_modules","info":{"name":"modules","icon":"newspaper"},"options":{"timestamps":false},"attributes":{"title":{"type":"string","required":true},"subtitle":{"type":"string","required":true},"description":{"type":"richtext","required":true}}}	object	\N	\N
 7	model_def_page.questions	{"uid":"page.questions","collectionName":"components_page_questions","info":{"name":"questions","icon":"question"},"options":{"timestamps":false},"attributes":{"question":{"type":"text","required":true},"answer":{"type":"richtext","required":true}}}	object	\N	\N
-8	model_def_page.reviews	{"uid":"page.reviews","collectionName":"components_page_reviews","info":{"name":"reviews","icon":"user"},"options":{"timestamps":false},"attributes":{"name":{"type":"string","required":true},"text":{"type":"text","required":true},"photo":{"model":"file","via":"related","allowedTypes":["images"],"plugin":"upload","required":false,"pluginOptions":{}}}}	object	\N	\N
 9	model_def_page.section-about-project	{"uid":"page.section-about-project","collectionName":"components_page_section_about_projects","info":{"name":"sectionAboutProject","icon":"info"},"options":{"timestamps":false},"attributes":{"title":{"type":"string","required":true},"description":{"type":"richtext","required":true},"image":{"model":"file","via":"related","allowedTypes":["images"],"plugin":"upload","required":true,"pluginOptions":{}}}}	object	\N	\N
 10	model_def_page.section-about-us	{"uid":"page.section-about-us","collectionName":"components_page_section_aboutuses","info":{"name":"sectionAboutUs","icon":"user-astronaut"},"options":{"timestamps":false},"attributes":{"title":{"type":"string","required":true},"authors":{"unique":true,"collection":"author","attribute":"author","column":"id","isVirtual":true}}}	object	\N	\N
 11	model_def_page.section-agenda	{"uid":"page.section-agenda","collectionName":"components_page_section_agenda","info":{"name":"sectionAgenda","icon":"calendar-alt"},"options":{"timestamps":false},"attributes":{"title":{"type":"string","required":true},"description":{"type":"richtext","required":true}}}	object	\N	\N
 12	model_def_page.section-concepts	{"uid":"page.section-concepts","collectionName":"components_page_section_concepts","info":{"name":"sectionConcepts","icon":"align-justify"},"options":{"timestamps":false},"attributes":{"title":{"type":"string","required":true},"concepts":{"type":"component","repeatable":true,"component":"page.concepts"}}}	object	\N	\N
-14	model_def_page.section-modules	{"uid":"page.section-modules","collectionName":"components_page_section_modules","info":{"name":"sectionModules","icon":"atlas"},"options":{"timestamps":false},"attributes":{"title":{"type":"string","required":true},"modules":{"type":"component","repeatable":true,"component":"page.modules","required":true,"min":2}}}	object	\N	\N
-15	model_def_page.section-reviews	{"uid":"page.section-reviews","collectionName":"components_page_section_reviews","info":{"name":"sectionReviews","icon":"star","description":""},"options":{"timestamps":false},"attributes":{"title":{"type":"string","required":true},"reviews":{"type":"component","repeatable":true,"component":"page.reviews","required":true,"max":8}}}	object	\N	\N
-16	model_def_page.section-tech	{"uid":"page.section-tech","collectionName":"components_page_section_teches","info":{"name":"sectionTech","icon":"toolbox","description":""},"options":{"timestamps":false},"attributes":{"title":{"type":"string","required":true},"techIcons":{"type":"component","repeatable":true,"component":"page.tech-icon","required":true,"max":10,"min":5}}}	object	\N	\N
-17	model_def_page.social-links	{"uid":"page.social-links","collectionName":"components_page_social_links","info":{"name":"socialLinks","icon":"network-wired"},"options":{"timestamps":false},"attributes":{"title":{"type":"enumeration","enum":["Github","Twitter","Dribble","Linkedin","Facebook"],"default":"Twitter","required":true},"url":{"type":"string","required":true}}}	object	\N	\N
-18	model_def_page.tech-icon	{"uid":"page.tech-icon","collectionName":"components_page_tech_icons","info":{"name":"techIcon","icon":"tools"},"options":{"timestamps":false},"attributes":{"icon":{"model":"file","via":"related","allowedTypes":["images"],"plugin":"upload","required":true,"pluginOptions":{}},"title":{"type":"string","required":true}}}	object	\N	\N
-2	model_def_page.button	{"uid":"page.button","collectionName":"components_page_buttons","info":{"name":"button","icon":"external-link-alt"},"options":{"timestamps":false},"attributes":{"label":{"type":"string","default":"Comprar","required":true,"maxLength":20},"url":{"type":"string","required":true}}}	object	\N	\N
-3	model_def_page.concepts	{"uid":"page.concepts","collectionName":"components_page_concepts","info":{"name":"concepts","icon":"stream"},"options":{"timestamps":false},"attributes":{"title":{"type":"string","required":true}}}	object	\N	\N
 13	model_def_page.section-faq	{"uid":"page.section-faq","collectionName":"components_page_section_faqs","info":{"name":"sectionFaq","icon":"question-circle"},"options":{"timestamps":false},"attributes":{"title":{"type":"string","required":true},"questions":{"type":"component","repeatable":true,"component":"page.questions","required":true,"min":2}}}	object	\N	\N
-4	model_def_page.header	{"uid":"page.header","collectionName":"components_page_headers","info":{"name":"header","icon":"heading"},"options":{"timestamps":false},"attributes":{"image":{"model":"file","via":"related","allowedTypes":["images","videos"],"plugin":"upload","required":true,"pluginOptions":{}}}}	object	\N	\N
-5	model_def_page.modules	{"uid":"page.modules","collectionName":"components_page_modules","info":{"name":"modules","icon":"newspaper"},"options":{"timestamps":false},"attributes":{"title":{"type":"string","required":true},"subtitle":{"type":"string","required":true},"description":{"type":"richtext","required":true}}}	object	\N	\N
+14	model_def_page.section-modules	{"uid":"page.section-modules","collectionName":"components_page_section_modules","info":{"name":"sectionModules","icon":"atlas"},"options":{"timestamps":false},"attributes":{"title":{"type":"string","required":true},"modules":{"type":"component","repeatable":true,"component":"page.modules","required":true,"min":2}}}	object	\N	\N
+16	model_def_page.section-tech	{"uid":"page.section-tech","collectionName":"components_page_section_teches","info":{"name":"sectionTech","icon":"toolbox","description":""},"options":{"timestamps":false},"attributes":{"title":{"type":"string","required":true},"techIcons":{"type":"component","repeatable":true,"component":"page.tech-icon","required":true,"max":10,"min":5}}}	object	\N	\N
+8	model_def_page.reviews	{"uid":"page.reviews","collectionName":"components_page_reviews","info":{"name":"reviews","icon":"user"},"options":{"timestamps":false},"attributes":{"name":{"type":"string","required":true},"text":{"type":"text","required":true},"photo":{"model":"file","via":"related","allowedTypes":["images"],"plugin":"upload","required":false,"pluginOptions":{}}}}	object	\N	\N
+17	model_def_page.social-links	{"uid":"page.social-links","collectionName":"components_page_social_links","info":{"name":"socialLinks","icon":"network-wired"},"options":{"timestamps":false},"attributes":{"title":{"type":"enumeration","enum":["Github","Twitter","Dribble","Linkedin","Facebook"],"default":"Twitter","required":true},"url":{"type":"string","required":true}}}	object	\N	\N
 21	model_def_strapi::webhooks	{"uid":"strapi::webhooks","collectionName":"strapi_webhooks","info":{"name":"Strapi webhooks","description":""},"options":{"timestamps":false},"pluginOptions":{"content-manager":{"visible":false},"content-type-builder":{"visible":false}},"attributes":{"name":{"type":"string"},"url":{"type":"text"},"headers":{"type":"json"},"events":{"type":"json"},"enabled":{"type":"boolean"}}}	object	\N	\N
+22	model_def_strapi::permission	{"uid":"strapi::permission","collectionName":"strapi_permission","kind":"collectionType","info":{"name":"Permission","description":""},"options":{"timestamps":["created_at","updated_at"]},"pluginOptions":{"content-manager":{"visible":false},"content-type-builder":{"visible":false}},"attributes":{"action":{"type":"string","minLength":1,"configurable":false,"required":true},"subject":{"type":"string","minLength":1,"configurable":false,"required":false},"properties":{"type":"json","configurable":false,"required":false,"default":{}},"conditions":{"type":"json","configurable":false,"required":false,"default":[]},"role":{"configurable":false,"model":"role","plugin":"admin"}}}	object	\N	\N
+25	model_def_plugins::users-permissions.permission	{"uid":"plugins::users-permissions.permission","collectionName":"users-permissions_permission","kind":"collectionType","info":{"name":"permission","description":""},"options":{"timestamps":false},"pluginOptions":{"content-manager":{"visible":false}},"attributes":{"type":{"type":"string","required":true,"configurable":false},"controller":{"type":"string","required":true,"configurable":false},"action":{"type":"string","required":true,"configurable":false},"enabled":{"type":"boolean","required":true,"configurable":false},"policy":{"type":"string","configurable":false},"role":{"model":"role","via":"permissions","plugin":"users-permissions","configurable":false},"created_by":{"model":"user","plugin":"admin","configurable":false,"writable":false,"visible":false,"private":true},"updated_by":{"model":"user","plugin":"admin","configurable":false,"writable":false,"visible":false,"private":true}}}	object	\N	\N
 23	model_def_strapi::role	{"uid":"strapi::role","collectionName":"strapi_role","kind":"collectionType","info":{"name":"Role","description":""},"options":{"timestamps":["created_at","updated_at"]},"pluginOptions":{"content-manager":{"visible":false},"content-type-builder":{"visible":false}},"attributes":{"name":{"type":"string","minLength":1,"unique":true,"configurable":false,"required":true},"code":{"type":"string","minLength":1,"unique":true,"configurable":false,"required":true},"description":{"type":"string","configurable":false},"users":{"configurable":false,"collection":"user","via":"roles","plugin":"admin","attribute":"user","column":"id","isVirtual":true},"permissions":{"configurable":false,"plugin":"admin","collection":"permission","via":"role","isVirtual":true}}}	object	\N	\N
 24	model_def_strapi::user	{"uid":"strapi::user","collectionName":"strapi_administrator","kind":"collectionType","info":{"name":"User","description":""},"options":{"timestamps":false},"pluginOptions":{"content-manager":{"visible":false},"content-type-builder":{"visible":false}},"attributes":{"firstname":{"type":"string","unique":false,"minLength":1,"configurable":false,"required":false},"lastname":{"type":"string","unique":false,"minLength":1,"configurable":false,"required":false},"username":{"type":"string","unique":false,"configurable":false,"required":false},"email":{"type":"email","minLength":6,"configurable":false,"required":true,"unique":true,"private":true},"password":{"type":"password","minLength":6,"configurable":false,"required":false,"private":true},"resetPasswordToken":{"type":"string","configurable":false,"private":true},"registrationToken":{"type":"string","configurable":false,"private":true},"isActive":{"type":"boolean","default":false,"configurable":false,"private":true},"roles":{"collection":"role","collectionName":"strapi_users_roles","via":"users","dominant":true,"plugin":"admin","configurable":false,"private":true,"attribute":"role","column":"id","isVirtual":true},"blocked":{"type":"boolean","default":false,"configurable":false,"private":true},"preferedLanguage":{"type":"string","configurable":false,"required":false}}}	object	\N	\N
-25	model_def_plugins::users-permissions.permission	{"uid":"plugins::users-permissions.permission","collectionName":"users-permissions_permission","kind":"collectionType","info":{"name":"permission","description":""},"options":{"timestamps":false},"pluginOptions":{"content-manager":{"visible":false}},"attributes":{"type":{"type":"string","required":true,"configurable":false},"controller":{"type":"string","required":true,"configurable":false},"action":{"type":"string","required":true,"configurable":false},"enabled":{"type":"boolean","required":true,"configurable":false},"policy":{"type":"string","configurable":false},"role":{"model":"role","via":"permissions","plugin":"users-permissions","configurable":false},"created_by":{"model":"user","plugin":"admin","configurable":false,"writable":false,"visible":false,"private":true},"updated_by":{"model":"user","plugin":"admin","configurable":false,"writable":false,"visible":false,"private":true}}}	object	\N	\N
-22	model_def_strapi::permission	{"uid":"strapi::permission","collectionName":"strapi_permission","kind":"collectionType","info":{"name":"Permission","description":""},"options":{"timestamps":["created_at","updated_at"]},"pluginOptions":{"content-manager":{"visible":false},"content-type-builder":{"visible":false}},"attributes":{"action":{"type":"string","minLength":1,"configurable":false,"required":true},"subject":{"type":"string","minLength":1,"configurable":false,"required":false},"properties":{"type":"json","configurable":false,"required":false,"default":{}},"conditions":{"type":"json","configurable":false,"required":false,"default":[]},"role":{"configurable":false,"model":"role","plugin":"admin"}}}	object	\N	\N
 30	plugin_users-permissions_grant	{"email":{"enabled":true,"icon":"envelope"},"discord":{"enabled":false,"icon":"discord","key":"","secret":"","callback":"/auth/discord/callback","scope":["identify","email"]},"facebook":{"enabled":false,"icon":"facebook-square","key":"","secret":"","callback":"/auth/facebook/callback","scope":["email"]},"google":{"enabled":false,"icon":"google","key":"","secret":"","callback":"/auth/google/callback","scope":["email"]},"github":{"enabled":false,"icon":"github","key":"","secret":"","callback":"/auth/github/callback","scope":["user","user:email"]},"microsoft":{"enabled":false,"icon":"windows","key":"","secret":"","callback":"/auth/microsoft/callback","scope":["user.read"]},"twitter":{"enabled":false,"icon":"twitter","key":"","secret":"","callback":"/auth/twitter/callback"},"instagram":{"enabled":false,"icon":"instagram","key":"","secret":"","callback":"/auth/instagram/callback","scope":["user_profile"]},"vk":{"enabled":false,"icon":"vk","key":"","secret":"","callback":"/auth/vk/callback","scope":["email"]},"twitch":{"enabled":false,"icon":"twitch","key":"","secret":"","callback":"/auth/twitch/callback","scope":["user:read:email"]},"linkedin":{"enabled":false,"icon":"linkedin","key":"","secret":"","callback":"/auth/linkedin/callback","scope":["r_liteprofile","r_emailaddress"]},"cognito":{"enabled":false,"icon":"aws","key":"","secret":"","subdomain":"my.subdomain.com","callback":"/auth/cognito/callback","scope":["email","openid","profile"]},"reddit":{"enabled":false,"icon":"reddit","key":"","secret":"","state":true,"callback":"/auth/reddit/callback","scope":["identity"]},"auth0":{"enabled":false,"icon":"","key":"","secret":"","subdomain":"my-tenant.eu","callback":"/auth/auth0/callback","scope":["openid","email","profile"]},"cas":{"enabled":false,"icon":"book","key":"","secret":"","callback":"/auth/cas/callback","scope":["openid email"],"subdomain":"my.subdomain.com/cas"}}	object		
 31	plugin_upload_settings	{"sizeOptimization":true,"responsiveDimensions":true}	object	development	
 33	plugin_content_manager_configuration_components::page.concepts	{"uid":"page.concepts","settings":{"bulkable":true,"filterable":true,"searchable":true,"pageSize":10,"mainField":"title","defaultSortBy":"title","defaultSortOrder":"ASC"},"metadatas":{"id":{"edit":{},"list":{"label":"Id","searchable":false,"sortable":false}},"title":{"edit":{"label":"Title","description":"","placeholder":"","visible":true,"editable":true},"list":{"label":"Title","searchable":true,"sortable":true}}},"layouts":{"list":["id","title"],"edit":[[{"name":"title","size":6}]],"editRelations":[]},"isComponent":true}	object		
-34	plugin_content_manager_configuration_components::page.header	{"uid":"page.header","settings":{"bulkable":true,"filterable":true,"searchable":true,"pageSize":10,"mainField":"id","defaultSortBy":"id","defaultSortOrder":"ASC"},"metadatas":{"id":{"edit":{},"list":{"label":"Id","searchable":false,"sortable":false}},"image":{"edit":{"label":"Image","description":"","placeholder":"","visible":true,"editable":true},"list":{"label":"Image","searchable":false,"sortable":false}}},"layouts":{"list":["id","image"],"edit":[[{"name":"image","size":6}]],"editRelations":[]},"isComponent":true}	object		
+34	plugin_content_manager_configuration_components::page.header	{"uid":"page.header","settings":{"bulkable":true,"filterable":true,"searchable":true,"pageSize":10,"mainField":"title","defaultSortBy":"title","defaultSortOrder":"ASC"},"metadatas":{"id":{"edit":{},"list":{"label":"Id","searchable":false,"sortable":false}},"image":{"edit":{"label":"Image","description":"","placeholder":"","visible":true,"editable":true},"list":{"label":"Image","searchable":false,"sortable":false}},"title":{"edit":{"label":"Title","description":"","placeholder":"","visible":true,"editable":true},"list":{"label":"Title","searchable":true,"sortable":true}},"description":{"edit":{"label":"Description","description":"","placeholder":"","visible":true,"editable":true},"list":{"label":"Description","searchable":true,"sortable":true}},"button":{"edit":{"label":"Button","description":"","placeholder":"","visible":true,"editable":true},"list":{"label":"Button","searchable":false,"sortable":false}}},"layouts":{"list":["id","image","title","description"],"edit":[[{"name":"image","size":6},{"name":"title","size":6}],[{"name":"description","size":6}],[{"name":"button","size":12}]],"editRelations":[]},"isComponent":true}	object		
 32	plugin_content_manager_configuration_components::page.button	{"uid":"page.button","settings":{"bulkable":true,"filterable":true,"searchable":true,"pageSize":10,"mainField":"label","defaultSortBy":"label","defaultSortOrder":"ASC"},"metadatas":{"id":{"edit":{},"list":{"label":"Id","searchable":false,"sortable":false}},"label":{"edit":{"label":"Label","description":"","placeholder":"","visible":true,"editable":true},"list":{"label":"Label","searchable":true,"sortable":true}},"url":{"edit":{"label":"Url","description":"","placeholder":"","visible":true,"editable":true},"list":{"label":"Url","searchable":true,"sortable":true}}},"layouts":{"list":["id","label","url"],"edit":[[{"name":"label","size":6},{"name":"url","size":6}]],"editRelations":[]},"isComponent":true}	object		
-27	model_def_plugins::users-permissions.user	{"uid":"plugins::users-permissions.user","collectionName":"users-permissions_user","kind":"collectionType","info":{"name":"user","description":""},"options":{"draftAndPublish":false,"timestamps":["created_at","updated_at"]},"attributes":{"username":{"type":"string","minLength":3,"unique":true,"configurable":false,"required":true},"email":{"type":"email","minLength":6,"configurable":false,"required":true},"provider":{"type":"string","configurable":false},"password":{"type":"password","minLength":6,"configurable":false,"private":true},"resetPasswordToken":{"type":"string","configurable":false,"private":true},"confirmationToken":{"type":"string","configurable":false,"private":true},"confirmed":{"type":"boolean","default":false,"configurable":false},"blocked":{"type":"boolean","default":false,"configurable":false},"role":{"model":"role","via":"users","plugin":"users-permissions","configurable":false},"created_by":{"model":"user","plugin":"admin","configurable":false,"writable":false,"visible":false,"private":true},"updated_by":{"model":"user","plugin":"admin","configurable":false,"writable":false,"visible":false,"private":true}}}	object	\N	\N
 48	plugin_content_manager_configuration_components::page.tech-icon	{"uid":"page.tech-icon","settings":{"bulkable":true,"filterable":true,"searchable":true,"pageSize":10,"mainField":"title","defaultSortBy":"title","defaultSortOrder":"ASC"},"metadatas":{"id":{"edit":{},"list":{"label":"Id","searchable":false,"sortable":false}},"icon":{"edit":{"label":"Icon","description":"","placeholder":"","visible":true,"editable":true},"list":{"label":"Icon","searchable":false,"sortable":false}},"title":{"edit":{"label":"Title","description":"","placeholder":"","visible":true,"editable":true},"list":{"label":"Title","searchable":true,"sortable":true}}},"layouts":{"list":["id","icon","title"],"edit":[[{"name":"icon","size":6},{"name":"title","size":6}]],"editRelations":[]},"isComponent":true}	object		
 47	plugin_content_manager_configuration_components::page.social-links	{"uid":"page.social-links","settings":{"bulkable":true,"filterable":true,"searchable":true,"pageSize":10,"mainField":"url","defaultSortBy":"url","defaultSortOrder":"ASC"},"metadatas":{"id":{"edit":{},"list":{"label":"Id","searchable":false,"sortable":false}},"title":{"edit":{"label":"Title","description":"","placeholder":"","visible":true,"editable":true},"list":{"label":"Title","searchable":true,"sortable":true}},"url":{"edit":{"label":"Url","description":"","placeholder":"","visible":true,"editable":true},"list":{"label":"Url","searchable":true,"sortable":true}}},"layouts":{"list":["id","title","url"],"edit":[[{"name":"title","size":6},{"name":"url","size":6}]],"editRelations":[]},"isComponent":true}	object		
 49	plugin_i18n_default_locale	"en"	string		
@@ -2349,8 +2410,8 @@ COPY public.core_store (id, key, value, type, environment, tag) FROM stdin;
 40	plugin_content_manager_configuration_components::page.section-tech	{"uid":"page.section-tech","settings":{"bulkable":true,"filterable":true,"searchable":true,"pageSize":10,"mainField":"title","defaultSortBy":"title","defaultSortOrder":"ASC"},"metadatas":{"id":{"edit":{},"list":{"label":"Id","searchable":false,"sortable":false}},"title":{"edit":{"label":"Title","description":"","placeholder":"","visible":true,"editable":true},"list":{"label":"Title","searchable":true,"sortable":true}},"techIcons":{"edit":{"label":"TechIcons","description":"","placeholder":"","visible":true,"editable":true},"list":{"label":"TechIcons","searchable":false,"sortable":false}}},"layouts":{"list":["id","title"],"edit":[[{"name":"title","size":6}],[{"name":"techIcons","size":12}]],"editRelations":[]},"isComponent":true}	object		
 52	plugin_content_manager_configuration_content_types::strapi::role	{"uid":"strapi::role","settings":{"bulkable":true,"filterable":true,"searchable":true,"pageSize":10,"mainField":"name","defaultSortBy":"name","defaultSortOrder":"ASC"},"metadatas":{"id":{"edit":{},"list":{"label":"Id","searchable":true,"sortable":true}},"name":{"edit":{"label":"Name","description":"","placeholder":"","visible":true,"editable":true},"list":{"label":"Name","searchable":true,"sortable":true}},"code":{"edit":{"label":"Code","description":"","placeholder":"","visible":true,"editable":true},"list":{"label":"Code","searchable":true,"sortable":true}},"description":{"edit":{"label":"Description","description":"","placeholder":"","visible":true,"editable":true},"list":{"label":"Description","searchable":true,"sortable":true}},"users":{"edit":{"label":"Users","description":"","placeholder":"","visible":true,"editable":true,"mainField":"firstname"},"list":{"label":"Users","searchable":false,"sortable":false}},"permissions":{"edit":{"label":"Permissions","description":"","placeholder":"","visible":true,"editable":true,"mainField":"action"},"list":{"label":"Permissions","searchable":false,"sortable":false}},"created_at":{"edit":{"label":"Created_at","description":"","placeholder":"","visible":false,"editable":true},"list":{"label":"Created_at","searchable":true,"sortable":true}},"updated_at":{"edit":{"label":"Updated_at","description":"","placeholder":"","visible":false,"editable":true},"list":{"label":"Updated_at","searchable":true,"sortable":true}}},"layouts":{"list":["id","name","code","description"],"editRelations":["users","permissions"],"edit":[[{"name":"name","size":6},{"name":"code","size":6}],[{"name":"description","size":6}]]}}	object		
 41	plugin_content_manager_configuration_components::page.section-reviews	{"uid":"page.section-reviews","settings":{"bulkable":true,"filterable":true,"searchable":true,"pageSize":10,"mainField":"title","defaultSortBy":"title","defaultSortOrder":"ASC"},"metadatas":{"id":{"edit":{},"list":{"label":"Id","searchable":false,"sortable":false}},"title":{"edit":{"label":"Title","description":"","placeholder":"","visible":true,"editable":true},"list":{"label":"Title","searchable":true,"sortable":true}},"reviews":{"edit":{"label":"Reviews","description":"","placeholder":"","visible":true,"editable":true},"list":{"label":"Reviews","searchable":false,"sortable":false}}},"layouts":{"list":["id","title"],"edit":[[{"name":"title","size":6}],[{"name":"reviews","size":12}]],"editRelations":[]},"isComponent":true}	object		
-55	plugin_content_manager_configuration_content_types::application::landing-page.landing-page	{"uid":"application::landing-page.landing-page","settings":{"bulkable":true,"filterable":true,"searchable":true,"pageSize":10,"mainField":"title","defaultSortBy":"title","defaultSortOrder":"ASC"},"metadatas":{"id":{"edit":{},"list":{"label":"Id","searchable":true,"sortable":true}},"logo":{"edit":{"label":"Logo","description":"","placeholder":"","visible":true,"editable":true},"list":{"label":"Logo","searchable":false,"sortable":false}},"header":{"edit":{"label":"Header","description":"","placeholder":"","visible":true,"editable":true},"list":{"label":"Header","searchable":false,"sortable":false}},"title":{"edit":{"label":"Title","description":"","placeholder":"","visible":true,"editable":true},"list":{"label":"Title","searchable":true,"sortable":true}},"description":{"edit":{"label":"Description","description":"","placeholder":"","visible":true,"editable":true},"list":{"label":"Description","searchable":true,"sortable":true}},"button":{"edit":{"label":"Button","description":"","placeholder":"","visible":true,"editable":true},"list":{"label":"Button","searchable":false,"sortable":false}},"sectionAboutProject":{"edit":{"label":"SectionAboutProject","description":"","placeholder":"","visible":true,"editable":true},"list":{"label":"SectionAboutProject","searchable":false,"sortable":false}},"sectionTech":{"edit":{"label":"SectionTech","description":"","placeholder":"","visible":true,"editable":true},"list":{"label":"SectionTech","searchable":false,"sortable":false}},"sectionConcepts":{"edit":{"label":"SectionConcepts","description":"","placeholder":"","visible":true,"editable":true},"list":{"label":"SectionConcepts","searchable":false,"sortable":false}},"sectionModules":{"edit":{"label":"SectionModules","description":"","placeholder":"","visible":true,"editable":true},"list":{"label":"SectionModules","searchable":false,"sortable":false}},"sectionAgenda":{"edit":{"label":"SectionAgenda","description":"","placeholder":"","visible":true,"editable":true},"list":{"label":"SectionAgenda","searchable":false,"sortable":false}},"pricingBox":{"edit":{"label":"PricingBox","description":"","placeholder":"","visible":true,"editable":true},"list":{"label":"PricingBox","searchable":false,"sortable":false}},"sectionAboutUs":{"edit":{"label":"SectionAboutUs","description":"","placeholder":"","visible":true,"editable":true},"list":{"label":"SectionAboutUs","searchable":false,"sortable":false}},"sectionReviews":{"edit":{"label":"SectionReviews","description":"","placeholder":"","visible":true,"editable":true},"list":{"label":"SectionReviews","searchable":false,"sortable":false}},"sectionFaq":{"edit":{"label":"SectionFaq","description":"","placeholder":"","visible":true,"editable":true},"list":{"label":"SectionFaq","searchable":false,"sortable":false}},"created_at":{"edit":{"label":"Created_at","description":"","placeholder":"","visible":false,"editable":true},"list":{"label":"Created_at","searchable":true,"sortable":true}},"updated_at":{"edit":{"label":"Updated_at","description":"","placeholder":"","visible":false,"editable":true},"list":{"label":"Updated_at","searchable":true,"sortable":true}}},"layouts":{"list":["id","logo","title","description"],"editRelations":[],"edit":[[{"name":"logo","size":6}],[{"name":"header","size":12}],[{"name":"title","size":6},{"name":"description","size":6}],[{"name":"button","size":12}],[{"name":"sectionAboutProject","size":12}],[{"name":"sectionTech","size":12}],[{"name":"sectionConcepts","size":12}],[{"name":"sectionModules","size":12}],[{"name":"sectionAgenda","size":12}],[{"name":"pricingBox","size":12}],[{"name":"sectionAboutUs","size":12}],[{"name":"sectionReviews","size":12}],[{"name":"sectionFaq","size":12}]]}}	object		
 42	plugin_content_manager_configuration_components::page.section-modules	{"uid":"page.section-modules","settings":{"bulkable":true,"filterable":true,"searchable":true,"pageSize":10,"mainField":"title","defaultSortBy":"title","defaultSortOrder":"ASC"},"metadatas":{"id":{"edit":{},"list":{"label":"Id","searchable":false,"sortable":false}},"title":{"edit":{"label":"Title","description":"","placeholder":"","visible":true,"editable":true},"list":{"label":"Title","searchable":true,"sortable":true}},"modules":{"edit":{"label":"Modules","description":"","placeholder":"","visible":true,"editable":true},"list":{"label":"Modules","searchable":false,"sortable":false}}},"layouts":{"list":["id","title"],"edit":[[{"name":"title","size":6}],[{"name":"modules","size":12}]],"editRelations":[]},"isComponent":true}	object		
+55	plugin_content_manager_configuration_content_types::application::landing-page.landing-page	{"uid":"application::landing-page.landing-page","settings":{"bulkable":true,"filterable":true,"searchable":true,"pageSize":10,"mainField":"id","defaultSortBy":"id","defaultSortOrder":"ASC"},"metadatas":{"id":{"edit":{},"list":{"label":"Id","searchable":true,"sortable":true}},"logo":{"edit":{"label":"Logo","description":"","placeholder":"","visible":true,"editable":true},"list":{"label":"Logo","searchable":false,"sortable":false}},"header":{"edit":{"label":"Header","description":"","placeholder":"","visible":true,"editable":true},"list":{"label":"Header","searchable":false,"sortable":false}},"sectionAboutProject":{"edit":{"label":"SectionAboutProject","description":"","placeholder":"","visible":true,"editable":true},"list":{"label":"SectionAboutProject","searchable":false,"sortable":false}},"sectionTech":{"edit":{"label":"SectionTech","description":"","placeholder":"","visible":true,"editable":true},"list":{"label":"SectionTech","searchable":false,"sortable":false}},"sectionConcepts":{"edit":{"label":"SectionConcepts","description":"","placeholder":"","visible":true,"editable":true},"list":{"label":"SectionConcepts","searchable":false,"sortable":false}},"sectionModules":{"edit":{"label":"SectionModules","description":"","placeholder":"","visible":true,"editable":true},"list":{"label":"SectionModules","searchable":false,"sortable":false}},"sectionAgenda":{"edit":{"label":"SectionAgenda","description":"","placeholder":"","visible":true,"editable":true},"list":{"label":"SectionAgenda","searchable":false,"sortable":false}},"pricingBox":{"edit":{"label":"PricingBox","description":"","placeholder":"","visible":true,"editable":true},"list":{"label":"PricingBox","searchable":false,"sortable":false}},"sectionAboutUs":{"edit":{"label":"SectionAboutUs","description":"","placeholder":"","visible":true,"editable":true},"list":{"label":"SectionAboutUs","searchable":false,"sortable":false}},"sectionReviews":{"edit":{"label":"SectionReviews","description":"","placeholder":"","visible":true,"editable":true},"list":{"label":"SectionReviews","searchable":false,"sortable":false}},"sectionFaq":{"edit":{"label":"SectionFaq","description":"","placeholder":"","visible":true,"editable":true},"list":{"label":"SectionFaq","searchable":false,"sortable":false}},"created_at":{"edit":{"label":"Created_at","description":"","placeholder":"","visible":false,"editable":true},"list":{"label":"Created_at","searchable":true,"sortable":true}},"updated_at":{"edit":{"label":"Updated_at","description":"","placeholder":"","visible":false,"editable":true},"list":{"label":"Updated_at","searchable":true,"sortable":true}}},"layouts":{"list":["id","logo"],"edit":[[{"name":"logo","size":6}],[{"name":"header","size":12}],[{"name":"sectionAboutProject","size":12}],[{"name":"sectionTech","size":12}],[{"name":"sectionConcepts","size":12}],[{"name":"sectionModules","size":12}],[{"name":"sectionAgenda","size":12}],[{"name":"pricingBox","size":12}],[{"name":"sectionAboutUs","size":12}],[{"name":"sectionReviews","size":12}],[{"name":"sectionFaq","size":12}]],"editRelations":[]}}	object		
 57	plugin_content_manager_configuration_content_types::plugins::users-permissions.user	{"uid":"plugins::users-permissions.user","settings":{"bulkable":true,"filterable":true,"searchable":true,"pageSize":10,"mainField":"username","defaultSortBy":"username","defaultSortOrder":"ASC"},"metadatas":{"id":{"edit":{},"list":{"label":"Id","searchable":true,"sortable":true}},"username":{"edit":{"label":"Username","description":"","placeholder":"","visible":true,"editable":true},"list":{"label":"Username","searchable":true,"sortable":true}},"email":{"edit":{"label":"Email","description":"","placeholder":"","visible":true,"editable":true},"list":{"label":"Email","searchable":true,"sortable":true}},"provider":{"edit":{"label":"Provider","description":"","placeholder":"","visible":false,"editable":true},"list":{"label":"Provider","searchable":true,"sortable":true}},"password":{"edit":{"label":"Password","description":"","placeholder":"","visible":true,"editable":true},"list":{"label":"Password","searchable":true,"sortable":true}},"resetPasswordToken":{"edit":{"label":"ResetPasswordToken","description":"","placeholder":"","visible":false,"editable":true},"list":{"label":"ResetPasswordToken","searchable":true,"sortable":true}},"confirmationToken":{"edit":{"label":"ConfirmationToken","description":"","placeholder":"","visible":false,"editable":true},"list":{"label":"ConfirmationToken","searchable":true,"sortable":true}},"confirmed":{"edit":{"label":"Confirmed","description":"","placeholder":"","visible":true,"editable":true},"list":{"label":"Confirmed","searchable":true,"sortable":true}},"blocked":{"edit":{"label":"Blocked","description":"","placeholder":"","visible":true,"editable":true},"list":{"label":"Blocked","searchable":true,"sortable":true}},"role":{"edit":{"label":"Role","description":"","placeholder":"","visible":true,"editable":true,"mainField":"name"},"list":{"label":"Role","searchable":true,"sortable":true}},"created_at":{"edit":{"label":"Created_at","description":"","placeholder":"","visible":false,"editable":true},"list":{"label":"Created_at","searchable":true,"sortable":true}},"updated_at":{"edit":{"label":"Updated_at","description":"","placeholder":"","visible":false,"editable":true},"list":{"label":"Updated_at","searchable":true,"sortable":true}}},"layouts":{"list":["id","username","email","confirmed"],"editRelations":["role"],"edit":[[{"name":"username","size":6},{"name":"email","size":6}],[{"name":"password","size":6},{"name":"confirmed","size":4}],[{"name":"blocked","size":4}]]}}	object		
 44	plugin_content_manager_configuration_components::page.section-concepts	{"uid":"page.section-concepts","settings":{"bulkable":true,"filterable":true,"searchable":true,"pageSize":10,"mainField":"title","defaultSortBy":"title","defaultSortOrder":"ASC"},"metadatas":{"id":{"edit":{},"list":{"label":"Id","searchable":false,"sortable":false}},"title":{"edit":{"label":"Title","description":"","placeholder":"","visible":true,"editable":true},"list":{"label":"Title","searchable":true,"sortable":true}},"concepts":{"edit":{"label":"Concepts","description":"","placeholder":"","visible":true,"editable":true},"list":{"label":"Concepts","searchable":false,"sortable":false}}},"layouts":{"list":["id","title"],"edit":[[{"name":"title","size":6}],[{"name":"concepts","size":12}]],"editRelations":[]},"isComponent":true}	object		
 54	plugin_content_manager_configuration_content_types::application::author.author	{"uid":"application::author.author","settings":{"bulkable":true,"filterable":true,"searchable":true,"pageSize":10,"mainField":"name","defaultSortBy":"name","defaultSortOrder":"ASC"},"metadatas":{"id":{"edit":{},"list":{"label":"Id","searchable":true,"sortable":true}},"photo":{"edit":{"label":"Photo","description":"","placeholder":"","visible":true,"editable":true},"list":{"label":"Photo","searchable":false,"sortable":false}},"name":{"edit":{"label":"Name","description":"","placeholder":"","visible":true,"editable":true},"list":{"label":"Name","searchable":true,"sortable":true}},"role":{"edit":{"label":"Role","description":"","placeholder":"","visible":true,"editable":true},"list":{"label":"Role","searchable":true,"sortable":true}},"socialLinks":{"edit":{"label":"SocialLinks","description":"","placeholder":"","visible":true,"editable":true},"list":{"label":"SocialLinks","searchable":false,"sortable":false}},"description":{"edit":{"label":"Description","description":"","placeholder":"","visible":true,"editable":true},"list":{"label":"Description","searchable":true,"sortable":true}},"created_at":{"edit":{"label":"Created_at","description":"","placeholder":"","visible":false,"editable":true},"list":{"label":"Created_at","searchable":true,"sortable":true}},"updated_at":{"edit":{"label":"Updated_at","description":"","placeholder":"","visible":false,"editable":true},"list":{"label":"Updated_at","searchable":true,"sortable":true}}},"layouts":{"list":["id","photo","name","role"],"editRelations":[],"edit":[[{"name":"photo","size":6},{"name":"name","size":6}],[{"name":"role","size":6}],[{"name":"socialLinks","size":12}],[{"name":"description","size":6}]]}}	object		
@@ -2360,7 +2421,6 @@ COPY public.core_store (id, key, value, type, environment, tag) FROM stdin;
 62	core_admin_auth	{"providers":{"autoRegister":false,"defaultRole":null}}	object		
 59	plugin_content_manager_configuration_content_types::plugins::upload.file	{"uid":"plugins::upload.file","settings":{"bulkable":true,"filterable":true,"searchable":true,"pageSize":10,"mainField":"name","defaultSortBy":"name","defaultSortOrder":"ASC"},"metadatas":{"id":{"edit":{},"list":{"label":"Id","searchable":true,"sortable":true}},"name":{"edit":{"label":"Name","description":"","placeholder":"","visible":true,"editable":true},"list":{"label":"Name","searchable":true,"sortable":true}},"alternativeText":{"edit":{"label":"AlternativeText","description":"","placeholder":"","visible":true,"editable":true},"list":{"label":"AlternativeText","searchable":true,"sortable":true}},"caption":{"edit":{"label":"Caption","description":"","placeholder":"","visible":true,"editable":true},"list":{"label":"Caption","searchable":true,"sortable":true}},"width":{"edit":{"label":"Width","description":"","placeholder":"","visible":true,"editable":true},"list":{"label":"Width","searchable":true,"sortable":true}},"height":{"edit":{"label":"Height","description":"","placeholder":"","visible":true,"editable":true},"list":{"label":"Height","searchable":true,"sortable":true}},"formats":{"edit":{"label":"Formats","description":"","placeholder":"","visible":true,"editable":true},"list":{"label":"Formats","searchable":false,"sortable":false}},"hash":{"edit":{"label":"Hash","description":"","placeholder":"","visible":true,"editable":true},"list":{"label":"Hash","searchable":true,"sortable":true}},"ext":{"edit":{"label":"Ext","description":"","placeholder":"","visible":true,"editable":true},"list":{"label":"Ext","searchable":true,"sortable":true}},"mime":{"edit":{"label":"Mime","description":"","placeholder":"","visible":true,"editable":true},"list":{"label":"Mime","searchable":true,"sortable":true}},"size":{"edit":{"label":"Size","description":"","placeholder":"","visible":true,"editable":true},"list":{"label":"Size","searchable":true,"sortable":true}},"url":{"edit":{"label":"Url","description":"","placeholder":"","visible":true,"editable":true},"list":{"label":"Url","searchable":true,"sortable":true}},"previewUrl":{"edit":{"label":"PreviewUrl","description":"","placeholder":"","visible":true,"editable":true},"list":{"label":"PreviewUrl","searchable":true,"sortable":true}},"provider":{"edit":{"label":"Provider","description":"","placeholder":"","visible":true,"editable":true},"list":{"label":"Provider","searchable":true,"sortable":true}},"provider_metadata":{"edit":{"label":"Provider_metadata","description":"","placeholder":"","visible":true,"editable":true},"list":{"label":"Provider_metadata","searchable":false,"sortable":false}},"related":{"edit":{"label":"Related","description":"","placeholder":"","visible":true,"editable":true},"list":{"label":"Related","searchable":false,"sortable":false}},"created_at":{"edit":{"label":"Created_at","description":"","placeholder":"","visible":false,"editable":true},"list":{"label":"Created_at","searchable":true,"sortable":true}},"updated_at":{"edit":{"label":"Updated_at","description":"","placeholder":"","visible":false,"editable":true},"list":{"label":"Updated_at","searchable":true,"sortable":true}}},"layouts":{"list":["id","name","alternativeText","caption"],"editRelations":["related"],"edit":[[{"name":"name","size":6},{"name":"alternativeText","size":6}],[{"name":"caption","size":6},{"name":"width","size":4}],[{"name":"height","size":4}],[{"name":"formats","size":12}],[{"name":"hash","size":6},{"name":"ext","size":6}],[{"name":"mime","size":6},{"name":"size","size":4}],[{"name":"url","size":6},{"name":"previewUrl","size":6}],[{"name":"provider","size":6}],[{"name":"provider_metadata","size":12}]]}}	object		
 60	plugin_content_manager_configuration_content_types::plugins::users-permissions.permission	{"uid":"plugins::users-permissions.permission","settings":{"bulkable":true,"filterable":true,"searchable":true,"pageSize":10,"mainField":"type","defaultSortBy":"type","defaultSortOrder":"ASC"},"metadatas":{"id":{"edit":{},"list":{"label":"Id","searchable":true,"sortable":true}},"type":{"edit":{"label":"Type","description":"","placeholder":"","visible":true,"editable":true},"list":{"label":"Type","searchable":true,"sortable":true}},"controller":{"edit":{"label":"Controller","description":"","placeholder":"","visible":true,"editable":true},"list":{"label":"Controller","searchable":true,"sortable":true}},"action":{"edit":{"label":"Action","description":"","placeholder":"","visible":true,"editable":true},"list":{"label":"Action","searchable":true,"sortable":true}},"enabled":{"edit":{"label":"Enabled","description":"","placeholder":"","visible":true,"editable":true},"list":{"label":"Enabled","searchable":true,"sortable":true}},"policy":{"edit":{"label":"Policy","description":"","placeholder":"","visible":true,"editable":true},"list":{"label":"Policy","searchable":true,"sortable":true}},"role":{"edit":{"label":"Role","description":"","placeholder":"","visible":true,"editable":true,"mainField":"name"},"list":{"label":"Role","searchable":true,"sortable":true}}},"layouts":{"list":["id","type","controller","action"],"editRelations":["role"],"edit":[[{"name":"type","size":6},{"name":"controller","size":6}],[{"name":"action","size":6},{"name":"enabled","size":4}],[{"name":"policy","size":6}]]}}	object		
-28	model_def_plugins::upload.file	{"uid":"plugins::upload.file","collectionName":"upload_file","kind":"collectionType","info":{"name":"file","description":""},"options":{"timestamps":["created_at","updated_at"]},"pluginOptions":{"content-manager":{"visible":false},"content-type-builder":{"visible":false}},"attributes":{"name":{"type":"string","configurable":false,"required":true},"alternativeText":{"type":"string","configurable":false},"caption":{"type":"string","configurable":false},"width":{"type":"integer","configurable":false},"height":{"type":"integer","configurable":false},"formats":{"type":"json","configurable":false},"hash":{"type":"string","configurable":false,"required":true},"ext":{"type":"string","configurable":false},"mime":{"type":"string","configurable":false,"required":true},"size":{"type":"decimal","configurable":false,"required":true},"url":{"type":"string","configurable":false,"required":true},"previewUrl":{"type":"string","configurable":false},"provider":{"type":"string","configurable":false,"required":true},"provider_metadata":{"type":"json","configurable":false},"related":{"collection":"*","filter":"field","configurable":false},"created_by":{"model":"user","plugin":"admin","configurable":false,"writable":false,"visible":false,"private":true},"updated_by":{"model":"user","plugin":"admin","configurable":false,"writable":false,"visible":false,"private":true}}}	object	\N	\N
 6	model_def_page.price-box	{"uid":"page.price-box","collectionName":"components_page_price_boxes","info":{"name":"priceBox","icon":"dollar-sign"},"options":{"timestamps":false},"attributes":{"totalPrice":{"type":"integer","required":true,"default":415},"numberInstallments":{"type":"integer","required":true},"priceInstallment":{"type":"integer","required":true},"benefits":{"type":"richtext","default":"Create items as bullet list","required":true},"button":{"type":"component","repeatable":false,"component":"page.button","required":true}}}	object	\N	\N
 29	model_def_plugins::i18n.locale	{"uid":"plugins::i18n.locale","collectionName":"i18n_locales","kind":"collectionType","info":{"name":"locale","description":""},"options":{"timestamps":["created_at","updated_at"]},"pluginOptions":{"content-manager":{"visible":false},"content-type-builder":{"visible":false}},"attributes":{"name":{"type":"string","min":1,"max":50,"configurable":false},"code":{"type":"string","unique":true,"configurable":false},"created_by":{"model":"user","plugin":"admin","configurable":false,"writable":false,"visible":false,"private":true},"updated_by":{"model":"user","plugin":"admin","configurable":false,"writable":false,"visible":false,"private":true}}}	object	\N	\N
 35	plugin_content_manager_configuration_components::page.modules	{"uid":"page.modules","settings":{"bulkable":true,"filterable":true,"searchable":true,"pageSize":10,"mainField":"title","defaultSortBy":"title","defaultSortOrder":"ASC"},"metadatas":{"id":{"edit":{},"list":{"label":"Id","searchable":false,"sortable":false}},"title":{"edit":{"label":"Title","description":"","placeholder":"","visible":true,"editable":true},"list":{"label":"Title","searchable":true,"sortable":true}},"subtitle":{"edit":{"label":"Subtitle","description":"","placeholder":"","visible":true,"editable":true},"list":{"label":"Subtitle","searchable":true,"sortable":true}},"description":{"edit":{"label":"Description","description":"","placeholder":"","visible":true,"editable":true},"list":{"label":"Description","searchable":false,"sortable":false}}},"layouts":{"list":["id","title","subtitle"],"edit":[[{"name":"title","size":6},{"name":"subtitle","size":6}],[{"name":"description","size":12}]],"editRelations":[]},"isComponent":true}	object		
@@ -2370,9 +2430,11 @@ COPY public.core_store (id, key, value, type, environment, tag) FROM stdin;
 38	plugin_content_manager_configuration_components::page.section-about-project	{"uid":"page.section-about-project","settings":{"bulkable":true,"filterable":true,"searchable":true,"pageSize":10,"mainField":"title","defaultSortBy":"title","defaultSortOrder":"ASC"},"metadatas":{"id":{"edit":{},"list":{"label":"Id","searchable":false,"sortable":false}},"title":{"edit":{"label":"Title","description":"","placeholder":"","visible":true,"editable":true},"list":{"label":"Title","searchable":true,"sortable":true}},"description":{"edit":{"label":"Description","description":"","placeholder":"","visible":true,"editable":true},"list":{"label":"Description","searchable":false,"sortable":false}},"image":{"edit":{"label":"Image","description":"","placeholder":"","visible":true,"editable":true},"list":{"label":"Image","searchable":false,"sortable":false}}},"layouts":{"list":["id","title","image"],"edit":[[{"name":"title","size":6}],[{"name":"description","size":12}],[{"name":"image","size":6}]],"editRelations":[]},"isComponent":true}	object		
 43	plugin_content_manager_configuration_components::page.section-faq	{"uid":"page.section-faq","settings":{"bulkable":true,"filterable":true,"searchable":true,"pageSize":10,"mainField":"title","defaultSortBy":"title","defaultSortOrder":"ASC"},"metadatas":{"id":{"edit":{},"list":{"label":"Id","searchable":false,"sortable":false}},"title":{"edit":{"label":"Title","description":"","placeholder":"","visible":true,"editable":true},"list":{"label":"Title","searchable":true,"sortable":true}},"questions":{"edit":{"label":"Questions","description":"","placeholder":"","visible":true,"editable":true},"list":{"label":"Questions","searchable":false,"sortable":false}}},"layouts":{"list":["id","title"],"edit":[[{"name":"title","size":6}],[{"name":"questions","size":12}]],"editRelations":[]},"isComponent":true}	object		
 1	model_def_strapi::core-store	{"uid":"strapi::core-store","collectionName":"core_store","info":{"name":"core_store","description":""},"options":{"timestamps":false},"pluginOptions":{"content-manager":{"visible":false},"content-type-builder":{"visible":false}},"attributes":{"key":{"type":"string"},"value":{"type":"text"},"type":{"type":"string"},"environment":{"type":"string"},"tag":{"type":"string"}}}	object	\N	\N
-19	model_def_application::author.author	{"uid":"application::author.author","collectionName":"authors","kind":"collectionType","info":{"name":"author","description":""},"options":{"increments":true,"timestamps":["created_at","updated_at"],"draftAndPublish":true},"pluginOptions":{},"attributes":{"photo":{"model":"file","via":"related","allowedTypes":["images"],"plugin":"upload","required":true,"pluginOptions":{}},"name":{"type":"string","required":true},"role":{"type":"string","required":true},"socialLinks":{"type":"component","repeatable":true,"component":"page.social-links","required":true},"description":{"type":"text","required":true},"published_at":{"type":"datetime","configurable":false,"writable":true,"visible":false},"created_by":{"model":"user","plugin":"admin","configurable":false,"writable":false,"visible":false,"private":true},"updated_by":{"model":"user","plugin":"admin","configurable":false,"writable":false,"visible":false,"private":true}}}	object	\N	\N
 26	model_def_plugins::users-permissions.role	{"uid":"plugins::users-permissions.role","collectionName":"users-permissions_role","kind":"collectionType","info":{"name":"role","description":""},"options":{"timestamps":false},"pluginOptions":{"content-manager":{"visible":false}},"attributes":{"name":{"type":"string","minLength":3,"required":true,"configurable":false},"description":{"type":"string","configurable":false},"type":{"type":"string","unique":true,"configurable":false},"permissions":{"collection":"permission","via":"role","plugin":"users-permissions","configurable":false,"isVirtual":true},"users":{"collection":"user","via":"role","configurable":false,"plugin":"users-permissions","isVirtual":true},"created_by":{"model":"user","plugin":"admin","configurable":false,"writable":false,"visible":false,"private":true},"updated_by":{"model":"user","plugin":"admin","configurable":false,"writable":false,"visible":false,"private":true}}}	object	\N	\N
-20	model_def_application::landing-page.landing-page	{"uid":"application::landing-page.landing-page","collectionName":"landing_pages","kind":"singleType","info":{"name":"landingPage","description":""},"options":{"increments":true,"timestamps":["created_at","updated_at"],"draftAndPublish":true},"pluginOptions":{},"attributes":{"logo":{"model":"file","via":"related","allowedTypes":["images"],"plugin":"upload","required":true,"pluginOptions":{}},"header":{"type":"component","repeatable":false,"component":"page.header"},"title":{"type":"string","required":true},"description":{"type":"text","required":true},"button":{"type":"component","repeatable":false,"component":"page.button"},"sectionAboutProject":{"type":"component","repeatable":false,"component":"page.section-about-project"},"sectionTech":{"type":"component","repeatable":false,"component":"page.section-tech"},"sectionConcepts":{"type":"component","repeatable":false,"component":"page.section-concepts"},"sectionModules":{"type":"component","repeatable":false,"component":"page.section-modules","required":true},"sectionAgenda":{"type":"component","repeatable":false,"component":"page.section-agenda"},"pricingBox":{"type":"component","repeatable":false,"component":"page.price-box"},"sectionAboutUs":{"type":"component","repeatable":false,"component":"page.section-about-us"},"sectionReviews":{"type":"component","repeatable":false,"component":"page.section-reviews"},"sectionFaq":{"type":"component","repeatable":false,"component":"page.section-faq"},"published_at":{"type":"datetime","configurable":false,"writable":true,"visible":false},"created_by":{"model":"user","plugin":"admin","configurable":false,"writable":false,"visible":false,"private":true},"updated_by":{"model":"user","plugin":"admin","configurable":false,"writable":false,"visible":false,"private":true}}}	object	\N	\N
+28	model_def_plugins::upload.file	{"uid":"plugins::upload.file","collectionName":"upload_file","kind":"collectionType","info":{"name":"file","description":""},"options":{"timestamps":["created_at","updated_at"]},"pluginOptions":{"content-manager":{"visible":false},"content-type-builder":{"visible":false}},"attributes":{"name":{"type":"string","configurable":false,"required":true},"alternativeText":{"type":"string","configurable":false},"caption":{"type":"string","configurable":false},"width":{"type":"integer","configurable":false},"height":{"type":"integer","configurable":false},"formats":{"type":"json","configurable":false},"hash":{"type":"string","configurable":false,"required":true},"ext":{"type":"string","configurable":false},"mime":{"type":"string","configurable":false,"required":true},"size":{"type":"decimal","configurable":false,"required":true},"url":{"type":"string","configurable":false,"required":true},"previewUrl":{"type":"string","configurable":false},"provider":{"type":"string","configurable":false,"required":true},"provider_metadata":{"type":"json","configurable":false},"related":{"collection":"*","filter":"field","configurable":false},"created_by":{"model":"user","plugin":"admin","configurable":false,"writable":false,"visible":false,"private":true},"updated_by":{"model":"user","plugin":"admin","configurable":false,"writable":false,"visible":false,"private":true}}}	object	\N	\N
+19	model_def_application::author.author	{"uid":"application::author.author","collectionName":"authors","kind":"collectionType","info":{"name":"author","description":""},"options":{"increments":true,"timestamps":["created_at","updated_at"],"draftAndPublish":true},"pluginOptions":{},"attributes":{"photo":{"model":"file","via":"related","allowedTypes":["images"],"plugin":"upload","required":true,"pluginOptions":{}},"name":{"type":"string","required":true},"role":{"type":"string","required":true},"socialLinks":{"type":"component","repeatable":true,"component":"page.social-links","required":true},"description":{"type":"text","required":true},"published_at":{"type":"datetime","configurable":false,"writable":true,"visible":false},"created_by":{"model":"user","plugin":"admin","configurable":false,"writable":false,"visible":false,"private":true},"updated_by":{"model":"user","plugin":"admin","configurable":false,"writable":false,"visible":false,"private":true}}}	object	\N	\N
+20	model_def_application::landing-page.landing-page	{"uid":"application::landing-page.landing-page","collectionName":"landing_pages","kind":"singleType","info":{"name":"landingPage","description":""},"options":{"increments":true,"timestamps":["created_at","updated_at"],"draftAndPublish":true},"pluginOptions":{},"attributes":{"logo":{"model":"file","via":"related","allowedTypes":["images"],"plugin":"upload","required":true,"pluginOptions":{}},"header":{"type":"component","repeatable":false,"component":"page.header"},"sectionAboutProject":{"type":"component","repeatable":false,"component":"page.section-about-project"},"sectionTech":{"type":"component","repeatable":false,"component":"page.section-tech"},"sectionConcepts":{"type":"component","repeatable":false,"component":"page.section-concepts"},"sectionModules":{"type":"component","repeatable":false,"component":"page.section-modules","required":true},"sectionAgenda":{"type":"component","repeatable":false,"component":"page.section-agenda"},"pricingBox":{"type":"component","repeatable":false,"component":"page.price-box"},"sectionAboutUs":{"type":"component","repeatable":false,"component":"page.section-about-us"},"sectionReviews":{"type":"component","repeatable":false,"component":"page.section-reviews"},"sectionFaq":{"type":"component","repeatable":false,"component":"page.section-faq"},"published_at":{"type":"datetime","configurable":false,"writable":true,"visible":false},"created_by":{"model":"user","plugin":"admin","configurable":false,"writable":false,"visible":false,"private":true},"updated_by":{"model":"user","plugin":"admin","configurable":false,"writable":false,"visible":false,"private":true}}}	object	\N	\N
+27	model_def_plugins::users-permissions.user	{"uid":"plugins::users-permissions.user","collectionName":"users-permissions_user","kind":"collectionType","info":{"name":"user","description":""},"options":{"draftAndPublish":false,"timestamps":["created_at","updated_at"]},"attributes":{"username":{"type":"string","minLength":3,"unique":true,"configurable":false,"required":true},"email":{"type":"email","minLength":6,"configurable":false,"required":true},"provider":{"type":"string","configurable":false},"password":{"type":"password","minLength":6,"configurable":false,"private":true},"resetPasswordToken":{"type":"string","configurable":false,"private":true},"confirmationToken":{"type":"string","configurable":false,"private":true},"confirmed":{"type":"boolean","default":false,"configurable":false},"blocked":{"type":"boolean","default":false,"configurable":false},"role":{"model":"role","via":"users","plugin":"users-permissions","configurable":false},"created_by":{"model":"user","plugin":"admin","configurable":false,"writable":false,"visible":false,"private":true},"updated_by":{"model":"user","plugin":"admin","configurable":false,"writable":false,"visible":false,"private":true}}}	object	\N	\N
 \.
 
 
@@ -2389,8 +2451,8 @@ COPY public.i18n_locales (id, name, code, created_by, updated_by, created_at, up
 -- Data for Name: landing_pages; Type: TABLE DATA; Schema: public; Owner: strapi
 --
 
-COPY public.landing_pages (id, title, description, published_at, created_by, updated_by, created_at, updated_at) FROM stdin;
-1	React Avançado	Crie aplicações reais com NextJS, Strapi, GraphQL e mais!	\N	1	1	2022-04-18 20:25:17.828+00	2022-04-19 11:56:29.462+00
+COPY public.landing_pages (id, title, description, created_by, updated_by, created_at, updated_at, published_at) FROM stdin;
+1	React Avançado	Crie aplicações reais com NextJS, Strapi, GraphQL e mais!	1	1	2022-04-18 20:25:17.828+00	2022-04-19 16:36:39.212+00	2022-04-18 20:25:17.828+00
 \.
 
 
@@ -2399,8 +2461,8 @@ COPY public.landing_pages (id, title, description, published_at, created_by, upd
 --
 
 COPY public.landing_pages_components (id, field, "order", component_type, component_id, landing_page_id) FROM stdin;
-1	header	1	components_page_headers	1	1
 2	button	1	components_page_buttons	1	1
+1	header	1	components_page_headers	1	1
 4	sectionAboutProject	1	components_page_section_about_projects	1	1
 5	sectionTech	1	components_page_section_teches	1	1
 6	sectionConcepts	1	components_page_section_concepts	1	1
@@ -2427,14 +2489,12 @@ COPY public.strapi_administrator (id, firstname, lastname, username, email, pass
 --
 
 COPY public.strapi_permission (id, action, subject, properties, conditions, role, created_at, updated_at) FROM stdin;
+137	plugins::content-manager.explorer.create	application::landing-page.landing-page	{"fields": ["logo", "header.image", "header.title", "header.description", "header.button.label", "header.button.url", "sectionAboutProject.title", "sectionAboutProject.description", "sectionAboutProject.image", "sectionTech.title", "sectionTech.techIcons.icon", "sectionTech.techIcons.title", "sectionConcepts.title", "sectionConcepts.concepts.title", "sectionModules.title", "sectionModules.modules.title", "sectionModules.modules.subtitle", "sectionModules.modules.description", "sectionAgenda.title", "sectionAgenda.description", "pricingBox.totalPrice", "pricingBox.numberInstallments", "pricingBox.priceInstallment", "pricingBox.benefits", "pricingBox.button.label", "pricingBox.button.url", "sectionAboutUs.title", "sectionAboutUs.authors", "sectionReviews.title", "sectionReviews.reviews.name", "sectionReviews.reviews.text", "sectionReviews.reviews.photo", "sectionFaq.title", "sectionFaq.questions.question", "sectionFaq.questions.answer"]}	[]	1	2022-04-19 16:31:56.926+00	2022-04-19 16:31:56.96+00
+146	plugins::content-manager.explorer.delete	application::author.author	{}	[]	1	2022-04-20 10:33:28.664+00	2022-04-20 10:33:28.683+00
 1	plugins::content-manager.explorer.create	application::author.author	{"fields": ["photo", "name", "role", "socialLinks.title", "socialLinks.url", "description"]}	[]	2	2022-04-18 19:35:52.79+00	2022-04-18 19:35:52.823+00
-2	plugins::content-manager.explorer.create	application::landing-page.landing-page	{"fields": ["logo", "header.image", "title", "description", "button.label", "button.url", "sectionAboutProject.title", "sectionAboutProject.description", "sectionAboutProject.image", "sectionTech.title", "sectionTech.techIcons.icon", "sectionTech.techIcons.title", "sectionConcepts.title", "sectionConcepts.concepts.title", "sectionModules.title", "sectionModules.modules.title", "sectionModules.modules.subtitle", "sectionModules.modules.description", "sectionAgenda.title", "sectionAgenda.description", "pricingBox.totalPrice", "pricingBox.numberInstallments", "pricingBox.priceInstallment", "pricingBox.benefits", "pricingBox.button.label", "pricingBox.button.url", "sectionAboutUs.title", "sectionAboutUs.authors", "sectionReviews.title", "sectionReviews.reviews.name", "sectionReviews.reviews.text", "sectionReviews.reviews.photo", "sectionFaq.title", "sectionFaq.questions.question", "sectionFaq.questions.answer"]}	[]	2	2022-04-18 19:35:52.791+00	2022-04-18 19:35:52.824+00
 3	plugins::content-manager.explorer.read	application::author.author	{"fields": ["photo", "name", "role", "socialLinks.title", "socialLinks.url", "description"]}	[]	2	2022-04-18 19:35:52.791+00	2022-04-18 19:35:52.824+00
-4	plugins::content-manager.explorer.read	application::landing-page.landing-page	{"fields": ["logo", "header.image", "title", "description", "button.label", "button.url", "sectionAboutProject.title", "sectionAboutProject.description", "sectionAboutProject.image", "sectionTech.title", "sectionTech.techIcons.icon", "sectionTech.techIcons.title", "sectionConcepts.title", "sectionConcepts.concepts.title", "sectionModules.title", "sectionModules.modules.title", "sectionModules.modules.subtitle", "sectionModules.modules.description", "sectionAgenda.title", "sectionAgenda.description", "pricingBox.totalPrice", "pricingBox.numberInstallments", "pricingBox.priceInstallment", "pricingBox.benefits", "pricingBox.button.label", "pricingBox.button.url", "sectionAboutUs.title", "sectionAboutUs.authors", "sectionReviews.title", "sectionReviews.reviews.name", "sectionReviews.reviews.text", "sectionReviews.reviews.photo", "sectionFaq.title", "sectionFaq.questions.question", "sectionFaq.questions.answer"]}	[]	2	2022-04-18 19:35:52.791+00	2022-04-18 19:35:52.824+00
 5	plugins::content-manager.explorer.update	application::author.author	{"fields": ["photo", "name", "role", "socialLinks.title", "socialLinks.url", "description"]}	[]	2	2022-04-18 19:35:52.791+00	2022-04-18 19:35:52.825+00
 7	plugins::content-manager.explorer.delete	application::author.author	{}	[]	2	2022-04-18 19:35:52.792+00	2022-04-18 19:35:52.825+00
-8	plugins::content-manager.explorer.publish	application::author.author	{}	[]	2	2022-04-18 19:35:52.792+00	2022-04-18 19:35:52.825+00
-10	plugins::content-manager.explorer.publish	application::landing-page.landing-page	{}	[]	2	2022-04-18 19:35:52.801+00	2022-04-18 19:35:52.832+00
 9	plugins::content-manager.explorer.delete	application::landing-page.landing-page	{}	[]	2	2022-04-18 19:35:52.793+00	2022-04-18 19:35:52.832+00
 12	plugins::upload.assets.create	\N	{}	[]	2	2022-04-18 19:35:52.872+00	2022-04-18 19:35:52.893+00
 11	plugins::upload.read	\N	{}	[]	2	2022-04-18 19:35:52.871+00	2022-04-18 19:35:52.893+00
@@ -2442,7 +2502,6 @@ COPY public.strapi_permission (id, action, subject, properties, conditions, role
 20	plugins::content-manager.explorer.update	application::author.author	{"fields": ["photo", "name", "role", "socialLinks.title", "socialLinks.url", "description"]}	["admin::is-creator"]	3	2022-04-18 19:35:52.932+00	2022-04-18 19:35:52.958+00
 23	plugins::upload.read	\N	{}	["admin::is-creator"]	3	2022-04-18 19:35:52.939+00	2022-04-18 19:35:52.965+00
 25	plugins::upload.assets.create	\N	{}	[]	3	2022-04-18 19:35:52.94+00	2022-04-18 19:35:52.965+00
-33	plugins::content-manager.explorer.read	application::landing-page.landing-page	{"fields": ["logo", "header.image", "title", "description", "button.label", "button.url", "sectionAboutProject.title", "sectionAboutProject.description", "sectionAboutProject.image", "sectionTech.title", "sectionTech.techIcons.icon", "sectionTech.techIcons.title", "sectionConcepts.title", "sectionConcepts.concepts.title", "sectionModules.title", "sectionModules.modules.title", "sectionModules.modules.subtitle", "sectionModules.modules.description", "sectionAgenda.title", "sectionAgenda.description", "pricingBox.totalPrice", "pricingBox.numberInstallments", "pricingBox.priceInstallment", "pricingBox.benefits", "pricingBox.button.label", "pricingBox.button.url", "sectionAboutUs.title", "sectionAboutUs.authors", "sectionReviews.title", "sectionReviews.reviews.name", "sectionReviews.reviews.text", "sectionReviews.reviews.photo", "sectionFaq.title", "sectionFaq.questions.question", "sectionFaq.questions.answer"]}	[]	1	2022-04-18 19:35:53.107+00	2022-04-18 19:35:53.138+00
 35	plugins::content-manager.explorer.update	application::author.author	{"fields": ["photo", "name", "role", "socialLinks.title", "socialLinks.url", "description"]}	[]	1	2022-04-18 19:35:53.108+00	2022-04-18 19:35:53.139+00
 44	plugins::email.settings.read	\N	{}	[]	1	2022-04-18 19:35:53.198+00	2022-04-18 19:35:53.225+00
 50	plugins::upload.settings.read	\N	{}	[]	1	2022-04-18 19:35:53.264+00	2022-04-18 19:35:53.299+00
@@ -2453,14 +2512,15 @@ COPY public.strapi_permission (id, action, subject, properties, conditions, role
 73	admin::webhooks.update	\N	{}	[]	1	2022-04-18 19:35:53.433+00	2022-04-18 19:35:53.464+00
 80	admin::roles.read	\N	{}	[]	1	2022-04-18 19:35:53.508+00	2022-04-18 19:35:53.523+00
 82	admin::roles.delete	\N	{}	[]	1	2022-04-18 19:35:53.512+00	2022-04-18 19:35:53.527+00
-6	plugins::content-manager.explorer.update	application::landing-page.landing-page	{"fields": ["logo", "header.image", "title", "description", "button.label", "button.url", "sectionAboutProject.title", "sectionAboutProject.description", "sectionAboutProject.image", "sectionTech.title", "sectionTech.techIcons.icon", "sectionTech.techIcons.title", "sectionConcepts.title", "sectionConcepts.concepts.title", "sectionModules.title", "sectionModules.modules.title", "sectionModules.modules.subtitle", "sectionModules.modules.description", "sectionAgenda.title", "sectionAgenda.description", "pricingBox.totalPrice", "pricingBox.numberInstallments", "pricingBox.priceInstallment", "pricingBox.benefits", "pricingBox.button.label", "pricingBox.button.url", "sectionAboutUs.title", "sectionAboutUs.authors", "sectionReviews.title", "sectionReviews.reviews.name", "sectionReviews.reviews.text", "sectionReviews.reviews.photo", "sectionFaq.title", "sectionFaq.questions.question", "sectionFaq.questions.answer"]}	[]	2	2022-04-18 19:35:52.792+00	2022-04-18 19:35:52.825+00
 24	plugins::content-manager.explorer.delete	application::landing-page.landing-page	{}	["admin::is-creator"]	3	2022-04-18 19:35:52.939+00	2022-04-18 19:35:52.965+00
 34	plugins::content-manager.explorer.read	plugins::users-permissions.user	{"fields": ["username", "email", "provider", "password", "resetPasswordToken", "confirmationToken", "confirmed", "blocked", "role"]}	[]	1	2022-04-18 19:35:53.107+00	2022-04-18 19:35:53.138+00
 45	plugins::upload.read	\N	{}	[]	1	2022-04-18 19:35:53.198+00	2022-04-18 19:35:53.225+00
 56	plugins::content-manager.collection-types.configure-view	\N	{}	[]	1	2022-04-18 19:35:53.275+00	2022-04-18 19:35:53.306+00
 67	plugins::users-permissions.advanced-settings.update	\N	{}	[]	1	2022-04-18 19:35:53.364+00	2022-04-18 19:35:53.391+00
 77	admin::users.update	\N	{}	[]	1	2022-04-18 19:35:53.442+00	2022-04-18 19:35:53.471+00
-93	plugins::content-manager.explorer.delete	application::landing-page.landing-page	{}	[]	1	2022-04-19 11:48:57.214+00	2022-04-19 11:48:57.235+00
+138	plugins::content-manager.explorer.read	application::landing-page.landing-page	{"fields": ["logo", "header.image", "header.title", "header.description", "header.button.label", "header.button.url", "sectionAboutProject.title", "sectionAboutProject.description", "sectionAboutProject.image", "sectionTech.title", "sectionTech.techIcons.icon", "sectionTech.techIcons.title", "sectionConcepts.title", "sectionConcepts.concepts.title", "sectionModules.title", "sectionModules.modules.title", "sectionModules.modules.subtitle", "sectionModules.modules.description", "sectionAgenda.title", "sectionAgenda.description", "pricingBox.totalPrice", "pricingBox.numberInstallments", "pricingBox.priceInstallment", "pricingBox.benefits", "pricingBox.button.label", "pricingBox.button.url", "sectionAboutUs.title", "sectionAboutUs.authors", "sectionReviews.title", "sectionReviews.reviews.name", "sectionReviews.reviews.text", "sectionReviews.reviews.photo", "sectionFaq.title", "sectionFaq.questions.question", "sectionFaq.questions.answer"]}	[]	1	2022-04-19 16:31:56.927+00	2022-04-19 16:31:56.96+00
+6	plugins::content-manager.explorer.update	application::landing-page.landing-page	{"fields": ["logo", "header.image", "header.title", "header.description", "sectionAboutProject.title", "sectionAboutProject.description", "sectionAboutProject.image", "sectionTech.title", "sectionTech.techIcons.icon", "sectionTech.techIcons.title", "sectionConcepts.title", "sectionConcepts.concepts.title", "sectionModules.title", "sectionModules.modules.title", "sectionModules.modules.subtitle", "sectionModules.modules.description", "sectionAgenda.title", "sectionAgenda.description", "pricingBox.totalPrice", "pricingBox.numberInstallments", "pricingBox.priceInstallment", "pricingBox.benefits", "pricingBox.button.label", "pricingBox.button.url", "sectionAboutUs.title", "sectionAboutUs.authors", "sectionReviews.title", "sectionReviews.reviews.name", "sectionReviews.reviews.text", "sectionReviews.reviews.photo", "sectionFaq.title", "sectionFaq.questions.question", "sectionFaq.questions.answer", "header.button.label", "header.button.url"]}	[]	2	2022-04-18 19:35:52.792+00	2022-04-19 16:31:57.227+00
+145	plugins::content-manager.explorer.delete	application::landing-page.landing-page	{}	[]	1	2022-04-20 10:33:28.664+00	2022-04-20 10:33:28.683+00
 14	plugins::upload.assets.download	\N	{}	[]	2	2022-04-18 19:35:52.876+00	2022-04-18 19:35:52.897+00
 17	plugins::content-manager.explorer.read	application::author.author	{"fields": ["photo", "name", "role", "socialLinks.title", "socialLinks.url", "description"]}	["admin::is-creator"]	3	2022-04-18 19:35:52.93+00	2022-04-18 19:35:52.957+00
 27	plugins::upload.assets.download	\N	{}	[]	3	2022-04-18 19:35:53.007+00	2022-04-18 19:35:53.017+00
@@ -2468,16 +2528,17 @@ COPY public.strapi_permission (id, action, subject, properties, conditions, role
 49	plugins::upload.assets.copy-link	\N	{}	[]	1	2022-04-18 19:35:53.264+00	2022-04-18 19:35:53.29+00
 59	plugins::users-permissions.roles.read	\N	{}	[]	1	2022-04-18 19:35:53.346+00	2022-04-18 19:35:53.37+00
 71	admin::webhooks.create	\N	{}	[]	1	2022-04-18 19:35:53.424+00	2022-04-18 19:35:53.458+00
-94	plugins::content-manager.explorer.delete	application::author.author	{}	[]	1	2022-04-19 11:48:57.215+00	2022-04-19 11:48:57.235+00
+139	plugins::content-manager.explorer.update	application::landing-page.landing-page	{"fields": ["logo", "header.image", "header.title", "header.description", "header.button.label", "header.button.url", "sectionAboutProject.title", "sectionAboutProject.description", "sectionAboutProject.image", "sectionTech.title", "sectionTech.techIcons.icon", "sectionTech.techIcons.title", "sectionConcepts.title", "sectionConcepts.concepts.title", "sectionModules.title", "sectionModules.modules.title", "sectionModules.modules.subtitle", "sectionModules.modules.description", "sectionAgenda.title", "sectionAgenda.description", "pricingBox.totalPrice", "pricingBox.numberInstallments", "pricingBox.priceInstallment", "pricingBox.benefits", "pricingBox.button.label", "pricingBox.button.url", "sectionAboutUs.title", "sectionAboutUs.authors", "sectionReviews.title", "sectionReviews.reviews.name", "sectionReviews.reviews.text", "sectionReviews.reviews.photo", "sectionFaq.title", "sectionFaq.questions.question", "sectionFaq.questions.answer"]}	[]	1	2022-04-19 16:31:56.927+00	2022-04-19 16:31:56.961+00
+2	plugins::content-manager.explorer.create	application::landing-page.landing-page	{"fields": ["logo", "header.image", "header.title", "header.description", "sectionAboutProject.title", "sectionAboutProject.description", "sectionAboutProject.image", "sectionTech.title", "sectionTech.techIcons.icon", "sectionTech.techIcons.title", "sectionConcepts.title", "sectionConcepts.concepts.title", "sectionModules.title", "sectionModules.modules.title", "sectionModules.modules.subtitle", "sectionModules.modules.description", "sectionAgenda.title", "sectionAgenda.description", "pricingBox.totalPrice", "pricingBox.numberInstallments", "pricingBox.priceInstallment", "pricingBox.benefits", "pricingBox.button.label", "pricingBox.button.url", "sectionAboutUs.title", "sectionAboutUs.authors", "sectionReviews.title", "sectionReviews.reviews.name", "sectionReviews.reviews.text", "sectionReviews.reviews.photo", "sectionFaq.title", "sectionFaq.questions.question", "sectionFaq.questions.answer", "header.button.label", "header.button.url"]}	[]	2	2022-04-18 19:35:52.791+00	2022-04-19 16:31:57.228+00
+147	plugins::content-manager.explorer.delete	plugins::users-permissions.user	{}	[]	1	2022-04-20 10:33:28.665+00	2022-04-20 10:33:28.683+00
 15	plugins::upload.assets.copy-link	\N	{}	[]	2	2022-04-18 19:35:52.882+00	2022-04-18 19:35:52.901+00
 19	plugins::content-manager.explorer.create	application::author.author	{"fields": ["photo", "name", "role", "socialLinks.title", "socialLinks.url", "description"]}	["admin::is-creator"]	3	2022-04-18 19:35:52.932+00	2022-04-18 19:35:52.958+00
 28	plugins::upload.assets.copy-link	\N	{}	[]	3	2022-04-18 19:35:53.007+00	2022-04-18 19:35:53.019+00
-30	plugins::content-manager.explorer.create	application::landing-page.landing-page	{"fields": ["logo", "header.image", "title", "description", "button.label", "button.url", "sectionAboutProject.title", "sectionAboutProject.description", "sectionAboutProject.image", "sectionTech.title", "sectionTech.techIcons.icon", "sectionTech.techIcons.title", "sectionConcepts.title", "sectionConcepts.concepts.title", "sectionModules.title", "sectionModules.modules.title", "sectionModules.modules.subtitle", "sectionModules.modules.description", "sectionAgenda.title", "sectionAgenda.description", "pricingBox.totalPrice", "pricingBox.numberInstallments", "pricingBox.priceInstallment", "pricingBox.benefits", "pricingBox.button.label", "pricingBox.button.url", "sectionAboutUs.title", "sectionAboutUs.authors", "sectionReviews.title", "sectionReviews.reviews.name", "sectionReviews.reviews.text", "sectionReviews.reviews.photo", "sectionFaq.title", "sectionFaq.questions.question", "sectionFaq.questions.answer"]}	[]	1	2022-04-18 19:35:53.106+00	2022-04-18 19:35:53.137+00
+18	plugins::content-manager.explorer.create	application::landing-page.landing-page	{"fields": ["logo", "header.image", "header.title", "header.description", "sectionAboutProject.title", "sectionAboutProject.description", "sectionAboutProject.image", "sectionTech.title", "sectionTech.techIcons.icon", "sectionTech.techIcons.title", "sectionConcepts.title", "sectionConcepts.concepts.title", "sectionModules.title", "sectionModules.modules.title", "sectionModules.modules.subtitle", "sectionModules.modules.description", "sectionAgenda.title", "sectionAgenda.description", "pricingBox.totalPrice", "pricingBox.numberInstallments", "pricingBox.priceInstallment", "pricingBox.benefits", "pricingBox.button.label", "pricingBox.button.url", "sectionAboutUs.title", "sectionAboutUs.authors", "sectionReviews.title", "sectionReviews.reviews.name", "sectionReviews.reviews.text", "sectionReviews.reviews.photo", "sectionFaq.title", "sectionFaq.questions.question", "sectionFaq.questions.answer", "header.button.label", "header.button.url"]}	["admin::is-creator"]	3	2022-04-18 19:35:52.931+00	2022-04-19 16:31:57.228+00
 55	plugins::content-manager.single-types.configure-view	\N	{}	[]	1	2022-04-18 19:35:53.275+00	2022-04-18 19:35:53.306+00
 65	plugins::users-permissions.email-templates.update	\N	{}	[]	1	2022-04-18 19:35:53.358+00	2022-04-18 19:35:53.385+00
 75	admin::users.create	\N	{}	[]	1	2022-04-18 19:35:53.434+00	2022-04-18 19:35:53.465+00
-95	plugins::content-manager.explorer.delete	plugins::users-permissions.user	{}	[]	1	2022-04-19 11:48:57.215+00	2022-04-19 11:48:57.235+00
-16	plugins::content-manager.explorer.read	application::landing-page.landing-page	{"fields": ["logo", "header.image", "title", "description", "button.label", "button.url", "sectionAboutProject.title", "sectionAboutProject.description", "sectionAboutProject.image", "sectionTech.title", "sectionTech.techIcons.icon", "sectionTech.techIcons.title", "sectionConcepts.title", "sectionConcepts.concepts.title", "sectionModules.title", "sectionModules.modules.title", "sectionModules.modules.subtitle", "sectionModules.modules.description", "sectionAgenda.title", "sectionAgenda.description", "pricingBox.totalPrice", "pricingBox.numberInstallments", "pricingBox.priceInstallment", "pricingBox.benefits", "pricingBox.button.label", "pricingBox.button.url", "sectionAboutUs.title", "sectionAboutUs.authors", "sectionReviews.title", "sectionReviews.reviews.name", "sectionReviews.reviews.text", "sectionReviews.reviews.photo", "sectionFaq.title", "sectionFaq.questions.question", "sectionFaq.questions.answer"]}	["admin::is-creator"]	3	2022-04-18 19:35:52.93+00	2022-04-18 19:35:52.957+00
+148	plugins::content-manager.explorer.publish	application::author.author	{}	[]	1	2022-04-20 10:33:28.665+00	2022-04-20 10:33:28.691+00
 26	plugins::upload.assets.update	\N	{}	["admin::is-creator"]	3	2022-04-18 19:35:53.006+00	2022-04-18 19:35:53.017+00
 31	plugins::content-manager.explorer.create	plugins::users-permissions.user	{"fields": ["username", "email", "provider", "password", "resetPasswordToken", "confirmationToken", "confirmed", "blocked", "role"]}	[]	1	2022-04-18 19:35:53.106+00	2022-04-18 19:35:53.137+00
 43	plugins::content-type-builder.read	\N	{}	[]	1	2022-04-18 19:35:53.193+00	2022-04-18 19:35:53.218+00
@@ -2485,26 +2546,25 @@ COPY public.strapi_permission (id, action, subject, properties, conditions, role
 60	plugins::users-permissions.roles.update	\N	{}	[]	1	2022-04-18 19:35:53.351+00	2022-04-18 19:35:53.376+00
 69	admin::marketplace.plugins.install	\N	{}	[]	1	2022-04-18 19:35:53.423+00	2022-04-18 19:35:53.452+00
 79	admin::roles.create	\N	{}	[]	1	2022-04-18 19:35:53.505+00	2022-04-18 19:35:53.524+00
-96	plugins::content-manager.explorer.publish	application::author.author	{}	[]	1	2022-04-19 11:48:57.216+00	2022-04-19 11:48:57.243+00
-18	plugins::content-manager.explorer.create	application::landing-page.landing-page	{"fields": ["logo", "header.image", "title", "description", "button.label", "button.url", "sectionAboutProject.title", "sectionAboutProject.description", "sectionAboutProject.image", "sectionTech.title", "sectionTech.techIcons.icon", "sectionTech.techIcons.title", "sectionConcepts.title", "sectionConcepts.concepts.title", "sectionModules.title", "sectionModules.modules.title", "sectionModules.modules.subtitle", "sectionModules.modules.description", "sectionAgenda.title", "sectionAgenda.description", "pricingBox.totalPrice", "pricingBox.numberInstallments", "pricingBox.priceInstallment", "pricingBox.benefits", "pricingBox.button.label", "pricingBox.button.url", "sectionAboutUs.title", "sectionAboutUs.authors", "sectionReviews.title", "sectionReviews.reviews.name", "sectionReviews.reviews.text", "sectionReviews.reviews.photo", "sectionFaq.title", "sectionFaq.questions.question", "sectionFaq.questions.answer"]}	["admin::is-creator"]	3	2022-04-18 19:35:52.931+00	2022-04-18 19:35:52.958+00
+16	plugins::content-manager.explorer.read	application::landing-page.landing-page	{"fields": ["logo", "header.image", "header.title", "header.description", "sectionAboutProject.title", "sectionAboutProject.description", "sectionAboutProject.image", "sectionTech.title", "sectionTech.techIcons.icon", "sectionTech.techIcons.title", "sectionConcepts.title", "sectionConcepts.concepts.title", "sectionModules.title", "sectionModules.modules.title", "sectionModules.modules.subtitle", "sectionModules.modules.description", "sectionAgenda.title", "sectionAgenda.description", "pricingBox.totalPrice", "pricingBox.numberInstallments", "pricingBox.priceInstallment", "pricingBox.benefits", "pricingBox.button.label", "pricingBox.button.url", "sectionAboutUs.title", "sectionAboutUs.authors", "sectionReviews.title", "sectionReviews.reviews.name", "sectionReviews.reviews.text", "sectionReviews.reviews.photo", "sectionFaq.title", "sectionFaq.questions.question", "sectionFaq.questions.answer", "header.button.label", "header.button.url"]}	["admin::is-creator"]	3	2022-04-18 19:35:52.93+00	2022-04-19 16:31:57.236+00
+149	plugins::content-manager.explorer.publish	application::landing-page.landing-page	{}	[]	1	2022-04-20 10:33:28.671+00	2022-04-20 10:33:28.69+00
 46	plugins::upload.assets.create	\N	{}	[]	1	2022-04-18 19:35:53.198+00	2022-04-18 19:35:53.225+00
 54	plugins::i18n.locale.delete	\N	{}	[]	1	2022-04-18 19:35:53.274+00	2022-04-18 19:35:53.306+00
 63	plugins::users-permissions.providers.update	\N	{}	[]	1	2022-04-18 19:35:53.357+00	2022-04-18 19:35:53.384+00
 74	admin::webhooks.delete	\N	{}	[]	1	2022-04-18 19:35:53.433+00	2022-04-18 19:35:53.464+00
-97	plugins::content-manager.explorer.publish	application::landing-page.landing-page	{}	[]	1	2022-04-19 11:48:57.222+00	2022-04-19 11:48:57.243+00
-21	plugins::content-manager.explorer.update	application::landing-page.landing-page	{"fields": ["logo", "header.image", "title", "description", "button.label", "button.url", "sectionAboutProject.title", "sectionAboutProject.description", "sectionAboutProject.image", "sectionTech.title", "sectionTech.techIcons.icon", "sectionTech.techIcons.title", "sectionConcepts.title", "sectionConcepts.concepts.title", "sectionModules.title", "sectionModules.modules.title", "sectionModules.modules.subtitle", "sectionModules.modules.description", "sectionAgenda.title", "sectionAgenda.description", "pricingBox.totalPrice", "pricingBox.numberInstallments", "pricingBox.priceInstallment", "pricingBox.benefits", "pricingBox.button.label", "pricingBox.button.url", "sectionAboutUs.title", "sectionAboutUs.authors", "sectionReviews.title", "sectionReviews.reviews.name", "sectionReviews.reviews.text", "sectionReviews.reviews.photo", "sectionFaq.title", "sectionFaq.questions.question", "sectionFaq.questions.answer"]}	["admin::is-creator"]	3	2022-04-18 19:35:52.932+00	2022-04-18 19:35:52.958+00
+4	plugins::content-manager.explorer.read	application::landing-page.landing-page	{"fields": ["logo", "header.image", "header.title", "header.description", "sectionAboutProject.title", "sectionAboutProject.description", "sectionAboutProject.image", "sectionTech.title", "sectionTech.techIcons.icon", "sectionTech.techIcons.title", "sectionConcepts.title", "sectionConcepts.concepts.title", "sectionModules.title", "sectionModules.modules.title", "sectionModules.modules.subtitle", "sectionModules.modules.description", "sectionAgenda.title", "sectionAgenda.description", "pricingBox.totalPrice", "pricingBox.numberInstallments", "pricingBox.priceInstallment", "pricingBox.benefits", "pricingBox.button.label", "pricingBox.button.url", "sectionAboutUs.title", "sectionAboutUs.authors", "sectionReviews.title", "sectionReviews.reviews.name", "sectionReviews.reviews.text", "sectionReviews.reviews.photo", "sectionFaq.title", "sectionFaq.questions.question", "sectionFaq.questions.answer", "header.button.label", "header.button.url"]}	[]	2	2022-04-18 19:35:52.791+00	2022-04-19 16:31:57.235+00
 37	plugins::content-manager.explorer.update	plugins::users-permissions.user	{"fields": ["username", "email", "provider", "password", "resetPasswordToken", "confirmationToken", "confirmed", "blocked", "role"]}	[]	1	2022-04-18 19:35:53.115+00	2022-04-18 19:35:53.149+00
 47	plugins::upload.assets.update	\N	{}	[]	1	2022-04-18 19:35:53.199+00	2022-04-18 19:35:53.225+00
 57	plugins::content-manager.components.configure-layout	\N	{}	[]	1	2022-04-18 19:35:53.284+00	2022-04-18 19:35:53.314+00
 66	plugins::users-permissions.advanced-settings.read	\N	{}	[]	1	2022-04-18 19:35:53.364+00	2022-04-18 19:35:53.391+00
 76	admin::users.read	\N	{}	[]	1	2022-04-18 19:35:53.434+00	2022-04-18 19:35:53.465+00
+21	plugins::content-manager.explorer.update	application::landing-page.landing-page	{"fields": ["logo", "header.image", "header.title", "header.description", "sectionAboutProject.title", "sectionAboutProject.description", "sectionAboutProject.image", "sectionTech.title", "sectionTech.techIcons.icon", "sectionTech.techIcons.title", "sectionConcepts.title", "sectionConcepts.concepts.title", "sectionModules.title", "sectionModules.modules.title", "sectionModules.modules.subtitle", "sectionModules.modules.description", "sectionAgenda.title", "sectionAgenda.description", "pricingBox.totalPrice", "pricingBox.numberInstallments", "pricingBox.priceInstallment", "pricingBox.benefits", "pricingBox.button.label", "pricingBox.button.url", "sectionAboutUs.title", "sectionAboutUs.authors", "sectionReviews.title", "sectionReviews.reviews.name", "sectionReviews.reviews.text", "sectionReviews.reviews.photo", "sectionFaq.title", "sectionFaq.questions.question", "sectionFaq.questions.answer", "header.button.label", "header.button.url"]}	["admin::is-creator"]	3	2022-04-18 19:35:52.932+00	2022-04-19 16:31:57.244+00
 22	plugins::content-manager.explorer.delete	application::author.author	{}	["admin::is-creator"]	3	2022-04-18 19:35:52.933+00	2022-04-18 19:35:52.965+00
 32	plugins::content-manager.explorer.read	application::author.author	{"fields": ["photo", "name", "role", "socialLinks.title", "socialLinks.url", "description"]}	[]	1	2022-04-18 19:35:53.107+00	2022-04-18 19:35:53.138+00
 52	plugins::i18n.locale.read	\N	{}	[]	1	2022-04-18 19:35:53.269+00	2022-04-18 19:35:53.298+00
 61	plugins::users-permissions.roles.delete	\N	{}	[]	1	2022-04-18 19:35:53.351+00	2022-04-18 19:35:53.376+00
 70	admin::marketplace.plugins.uninstall	\N	{}	[]	1	2022-04-18 19:35:53.424+00	2022-04-18 19:35:53.452+00
 81	admin::roles.update	\N	{}	[]	1	2022-04-18 19:35:53.508+00	2022-04-18 19:35:53.523+00
-36	plugins::content-manager.explorer.update	application::landing-page.landing-page	{"fields": ["logo", "header.image", "title", "description", "button.label", "button.url", "sectionAboutProject.title", "sectionAboutProject.description", "sectionAboutProject.image", "sectionTech.title", "sectionTech.techIcons.icon", "sectionTech.techIcons.title", "sectionConcepts.title", "sectionConcepts.concepts.title", "sectionModules.title", "sectionModules.modules.title", "sectionModules.modules.subtitle", "sectionModules.modules.description", "sectionAgenda.title", "sectionAgenda.description", "pricingBox.totalPrice", "pricingBox.numberInstallments", "pricingBox.priceInstallment", "pricingBox.benefits", "pricingBox.button.label", "pricingBox.button.url", "sectionAboutUs.title", "sectionAboutUs.authors", "sectionReviews.title", "sectionReviews.reviews.name", "sectionReviews.reviews.text", "sectionReviews.reviews.photo", "sectionFaq.title", "sectionFaq.questions.question", "sectionFaq.questions.answer"]}	[]	1	2022-04-18 19:35:53.108+00	2022-04-18 19:35:53.15+00
 48	plugins::upload.assets.download	\N	{}	[]	1	2022-04-18 19:35:53.205+00	2022-04-18 19:35:53.234+00
 58	plugins::users-permissions.roles.create	\N	{}	[]	1	2022-04-18 19:35:53.29+00	2022-04-18 19:35:53.322+00
 68	admin::marketplace.read	\N	{}	[]	1	2022-04-18 19:35:53.377+00	2022-04-18 19:35:53.406+00
@@ -2545,8 +2605,6 @@ COPY public.strapi_webhooks (id, name, url, headers, events, enabled) FROM stdin
 --
 
 COPY public.upload_file (id, name, "alternativeText", caption, width, height, formats, hash, ext, mime, size, url, "previewUrl", provider, provider_metadata, created_by, updated_by, created_at, updated_at) FROM stdin;
-1	logo.svg			256	56	\N	logo_1e3d1f7a95	.svg	image/svg+xml	7.11	/uploads/logo_1e3d1f7a95.svg	\N	local	\N	1	1	2022-04-18 20:23:25.259+00	2022-04-18 20:23:25.279+00
-2	hero-illustration.svg			427	373	\N	hero_illustration_a092e2fd3b	.svg	image/svg+xml	12.61	/uploads/hero_illustration_a092e2fd3b.svg	\N	local	\N	1	1	2022-04-18 20:23:53.298+00	2022-04-18 20:23:53.312+00
 3	capa-do-projeto.webp			586	447	{"small": {"ext": ".webp", "url": "/uploads/small_capa_do_projeto_7c06d79745.webp", "hash": "small_capa_do_projeto_7c06d79745", "mime": "image/webp", "name": "small_capa-do-projeto.webp", "path": null, "size": 21.43, "width": 500, "height": 381}, "thumbnail": {"ext": ".webp", "url": "/uploads/thumbnail_capa_do_projeto_7c06d79745.webp", "hash": "thumbnail_capa_do_projeto_7c06d79745", "mime": "image/webp", "name": "thumbnail_capa-do-projeto.webp", "path": null, "size": 6.1, "width": 205, "height": 156}}	capa_do_projeto_7c06d79745	.webp	image/webp	21.71	/uploads/capa_do_projeto_7c06d79745.webp	\N	local	\N	1	1	2022-04-18 20:28:31.927+00	2022-04-18 20:28:31.941+00
 4	typescript.svg			128	129	\N	typescript_c388976265	.svg	image/svg+xml	1.84	/uploads/typescript_c388976265.svg	\N	local	\N	1	1	2022-04-18 20:30:59.434+00	2022-04-18 20:30:59.449+00
 5	react.svg			131	129	\N	react_8f49da24c8	.svg	image/svg+xml	2.23	/uploads/react_8f49da24c8.svg	\N	local	\N	1	1	2022-04-18 20:31:24.344+00	2022-04-18 20:31:24.358+00
@@ -2569,6 +2627,8 @@ COPY public.upload_file (id, name, "alternativeText", caption, width, height, fo
 22	review06.webp			50	50	\N	review06_dd80d8d34a	.webp	image/webp	0.53	/uploads/review06_dd80d8d34a.webp	\N	local	\N	1	1	2022-04-19 11:51:28.583+00	2022-04-19 11:51:28.598+00
 23	review07.webp			50	50	\N	review07_f1db26b816	.webp	image/webp	1.03	/uploads/review07_f1db26b816.webp	\N	local	\N	1	1	2022-04-19 11:52:22.488+00	2022-04-19 11:52:22.504+00
 24	review08.webp			50	50	\N	review08_707efa4fd3	.webp	image/webp	0.96	/uploads/review08_707efa4fd3.webp	\N	local	\N	1	1	2022-04-19 11:53:16.359+00	2022-04-19 11:53:16.373+00
+1	logo.svg	React Avançado		256	56	\N	logo_1e3d1f7a95	.svg	image/svg+xml	7.11	/uploads/logo_1e3d1f7a95.svg	\N	local	\N	1	1	2022-04-18 20:23:25.259+00	2022-04-19 16:04:13.16+00
+2	hero-illustration.svg	Ilustração de um programador com várias telas de código		427	373	\N	hero_illustration_a092e2fd3b	.svg	image/svg+xml	12.61	/uploads/hero_illustration_a092e2fd3b.svg	\N	local	\N	1	1	2022-04-18 20:23:53.298+00	2022-04-19 16:36:29.938+00
 \.
 
 
@@ -2580,27 +2640,27 @@ COPY public.upload_file_morph (id, upload_file_id, related_id, related_type, fie
 71	14	1	authors	photo	1
 72	15	2	authors	photo	1
 73	16	3	authors	photo	1
-335	2	1	components_page_headers	image	1
-336	3	1	components_page_section_about_projects	image	1
-337	4	1	components_page_tech_icons	icon	1
-338	5	2	components_page_tech_icons	icon	1
-339	6	3	components_page_tech_icons	icon	1
-340	7	4	components_page_tech_icons	icon	1
-341	8	5	components_page_tech_icons	icon	1
-342	9	6	components_page_tech_icons	icon	1
-343	10	7	components_page_tech_icons	icon	1
-344	11	8	components_page_tech_icons	icon	1
-345	12	9	components_page_tech_icons	icon	1
-346	13	10	components_page_tech_icons	icon	1
-347	17	1	components_page_reviews	photo	1
-348	18	2	components_page_reviews	photo	1
-349	19	3	components_page_reviews	photo	1
-350	20	4	components_page_reviews	photo	1
-351	21	5	components_page_reviews	photo	1
-352	22	6	components_page_reviews	photo	1
-353	23	7	components_page_reviews	photo	1
-354	24	8	components_page_reviews	photo	1
-355	1	1	landing_pages	logo	1
+398	2	1	components_page_headers	image	1
+399	3	1	components_page_section_about_projects	image	1
+400	4	1	components_page_tech_icons	icon	1
+401	5	2	components_page_tech_icons	icon	1
+402	6	3	components_page_tech_icons	icon	1
+403	7	4	components_page_tech_icons	icon	1
+404	8	5	components_page_tech_icons	icon	1
+405	9	6	components_page_tech_icons	icon	1
+406	10	7	components_page_tech_icons	icon	1
+407	11	8	components_page_tech_icons	icon	1
+408	12	9	components_page_tech_icons	icon	1
+409	13	10	components_page_tech_icons	icon	1
+410	17	1	components_page_reviews	photo	1
+411	18	2	components_page_reviews	photo	1
+412	19	3	components_page_reviews	photo	1
+413	20	4	components_page_reviews	photo	1
+414	21	5	components_page_reviews	photo	1
+415	22	6	components_page_reviews	photo	1
+416	23	7	components_page_reviews	photo	1
+417	24	8	components_page_reviews	photo	1
+418	1	1	landing_pages	logo	1
 \.
 
 
@@ -2609,22 +2669,18 @@ COPY public.upload_file_morph (id, upload_file_id, related_id, related_type, fie
 --
 
 COPY public."users-permissions_permission" (id, type, controller, action, enabled, policy, role, created_by, updated_by) FROM stdin;
-2	application	author	count	f		2	\N	\N
 1	application	author	count	f		1	\N	\N
 3	application	author	create	f		1	\N	\N
 4	application	author	create	f		2	\N	\N
 5	application	author	delete	f		1	\N	\N
 6	application	author	delete	f		2	\N	\N
 7	application	author	find	f		1	\N	\N
-8	application	author	find	f		2	\N	\N
-10	application	author	findone	f		2	\N	\N
 9	application	author	findone	f		1	\N	\N
 11	application	author	update	f		1	\N	\N
 12	application	author	update	f		2	\N	\N
 13	application	landing-page	delete	f		1	\N	\N
 14	application	landing-page	delete	f		2	\N	\N
 15	application	landing-page	find	f		1	\N	\N
-16	application	landing-page	find	f		2	\N	\N
 17	application	landing-page	update	f		1	\N	\N
 18	application	landing-page	update	f		2	\N	\N
 19	content-manager	collection-types	bulkdelete	f		1	\N	\N
@@ -2679,6 +2735,7 @@ COPY public."users-permissions_permission" (id, type, controller, action, enable
 68	content-type-builder	builder	getreservednames	f		2	\N	\N
 69	content-type-builder	componentcategories	deletecategory	f		1	\N	\N
 70	content-type-builder	componentcategories	deletecategory	f		2	\N	\N
+8	application	author	find	t		2	\N	\N
 71	content-type-builder	componentcategories	editcategory	f		1	\N	\N
 72	content-type-builder	componentcategories	editcategory	f		2	\N	\N
 81	content-type-builder	components	updatecomponent	f		1	\N	\N
@@ -2707,6 +2764,7 @@ COPY public."users-permissions_permission" (id, type, controller, action, enable
 167	users-permissions	userspermissions	getpermissions	f		1	\N	\N
 176	users-permissions	userspermissions	getroles	f		2	\N	\N
 186	users-permissions	userspermissions	updateemailtemplate	f		2	\N	\N
+10	application	author	findone	t		2	\N	\N
 74	content-type-builder	components	createcomponent	f		2	\N	\N
 84	content-type-builder	connections	getconnections	f		2	\N	\N
 92	content-type-builder	contenttypes	getcontenttypes	f		2	\N	\N
@@ -2719,6 +2777,7 @@ COPY public."users-permissions_permission" (id, type, controller, action, enable
 166	users-permissions	userspermissions	getemailtemplate	f		2	\N	\N
 174	users-permissions	userspermissions	getrole	f		2	\N	\N
 184	users-permissions	userspermissions	updateadvancedsettings	f		2	\N	\N
+16	application	landing-page	find	t		2	\N	\N
 75	content-type-builder	components	deletecomponent	f		1	\N	\N
 87	content-type-builder	contenttypes	deletecontenttype	f		1	\N	\N
 95	email	email	getsettings	f		1	\N	\N
@@ -2731,6 +2790,7 @@ COPY public."users-permissions_permission" (id, type, controller, action, enable
 165	users-permissions	userspermissions	getemailtemplate	f		1	\N	\N
 178	users-permissions	userspermissions	getroutes	f		2	\N	\N
 189	users-permissions	userspermissions	updaterole	f		1	\N	\N
+2	application	author	count	t		2	\N	\N
 76	content-type-builder	components	deletecomponent	f		2	\N	\N
 86	content-type-builder	contenttypes	createcontenttype	f		2	\N	\N
 93	content-type-builder	contenttypes	updatecontenttype	f		1	\N	\N
@@ -2838,7 +2898,7 @@ SELECT pg_catalog.setval('public.authors_id_seq', 3, true);
 -- Name: components_page_buttons_id_seq; Type: SEQUENCE SET; Schema: public; Owner: strapi
 --
 
-SELECT pg_catalog.setval('public.components_page_buttons_id_seq', 2, true);
+SELECT pg_catalog.setval('public.components_page_buttons_id_seq', 3, true);
 
 
 --
@@ -2846,6 +2906,13 @@ SELECT pg_catalog.setval('public.components_page_buttons_id_seq', 2, true);
 --
 
 SELECT pg_catalog.setval('public.components_page_concepts_id_seq', 18, true);
+
+
+--
+-- Name: components_page_headers_components_id_seq; Type: SEQUENCE SET; Schema: public; Owner: strapi
+--
+
+SELECT pg_catalog.setval('public.components_page_headers_components_id_seq', 1, true);
 
 
 --
@@ -3041,7 +3108,7 @@ SELECT pg_catalog.setval('public.strapi_administrator_id_seq', 1, true);
 -- Name: strapi_permission_id_seq; Type: SEQUENCE SET; Schema: public; Owner: strapi
 --
 
-SELECT pg_catalog.setval('public.strapi_permission_id_seq', 97, true);
+SELECT pg_catalog.setval('public.strapi_permission_id_seq', 149, true);
 
 
 --
@@ -3076,7 +3143,7 @@ SELECT pg_catalog.setval('public.upload_file_id_seq', 24, true);
 -- Name: upload_file_morph_id_seq; Type: SEQUENCE SET; Schema: public; Owner: strapi
 --
 
-SELECT pg_catalog.setval('public.upload_file_morph_id_seq', 355, true);
+SELECT pg_catalog.setval('public.upload_file_morph_id_seq', 418, true);
 
 
 --
@@ -3130,6 +3197,14 @@ ALTER TABLE ONLY public.components_page_buttons
 
 ALTER TABLE ONLY public.components_page_concepts
     ADD CONSTRAINT components_page_concepts_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: components_page_headers_components components_page_headers_components_pkey; Type: CONSTRAINT; Schema: public; Owner: strapi
+--
+
+ALTER TABLE ONLY public.components_page_headers_components
+    ADD CONSTRAINT components_page_headers_components_pkey PRIMARY KEY (id);
 
 
 --
@@ -3474,6 +3549,14 @@ ALTER TABLE ONLY public."users-permissions_user"
 
 ALTER TABLE ONLY public.authors_components
     ADD CONSTRAINT author_id_fk FOREIGN KEY (author_id) REFERENCES public.authors(id) ON DELETE CASCADE;
+
+
+--
+-- Name: components_page_headers_components components_page_header_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: strapi
+--
+
+ALTER TABLE ONLY public.components_page_headers_components
+    ADD CONSTRAINT components_page_header_id_fk FOREIGN KEY (components_page_header_id) REFERENCES public.components_page_headers(id) ON DELETE CASCADE;
 
 
 --
