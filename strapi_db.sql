@@ -2137,13 +2137,13 @@ COPY public.components_page_price_boxes_components (id, field, "order", componen
 --
 
 COPY public.components_page_questions (id, question, answer) FROM stdin;
+5	Quais outros cursos você tem?	<p><span style="background-color:rgb(255,255,255);color:rgb(3,5,23);">Tenho alguns cursos gratuitos e pagos, você pode acessar todos os cursos </span><a href="https://willianjusten.com.br/cursos">nesse link.</a></p>
+6	Posso usar o projeto para o meu Portfólio?	<p><span style="background-color:rgb(255,255,255);color:rgb(3,5,23);">Definitivamente! A ideia é que vocês tenham um projeto de verdade que possam utilizar como bem entenderem.</span></p>
+7	Eu tenho outra dúvida!	<p><span style="background-color:rgb(255,255,255);color:rgb(3,5,23);">Sem problemas! Você pode acessar qualquer uma das </span><a href="https://willianjusten.com.br/about">minhas redes sociais</a><span style="background-color:rgb(255,255,255);color:rgb(3,5,23);"> ou entrar no </span><a href="http://bit.ly/slack-will">slack do nosso curso.</a></p>
 1	O que preciso saber para o curso?	<p><span style="background-color:rgb(255,255,255);color:rgb(3,5,23);">Um conhecimento básico de JavaScript/React é necessário para maior entendimento do curso, mas todo o conteúdo será explicado em detalhes e todas as perguntas/dúvidas serão respondidas.</span></p>
 2	Onde os vídeos serão publicados?	<p><span style="background-color:rgb(255,255,255);color:rgb(3,5,23);">Os vídeos serão publicados na Udemy, com o mesmo funcionamento que já existe, vídeos offline, autoplay, acelerar em 2x, aplicativo nativo e mais.</span></p>
 3	Quanto tempo tenho para fazer o curso?	<p style="margin-left:0px;">O curso é vitalício, faça quantas vezes quiser e quando quiser, nada de bloqueios ou pressa.</p>
 4	Esse curso tem certificado?	<p><span style="background-color:rgb(255,255,255);color:rgb(3,5,23);">Sim, o curso terá certificado e você poderá baixá-lo diretamente da Udemy ao término do curso.</span></p>
-5	Quais outros cursos você tem?	<p><span style="background-color:rgb(255,255,255);color:rgb(3,5,23);">Tenho alguns cursos gratuitos e pagos, você pode acessar todos os cursos </span><a href="https://willianjusten.com.br/cursos">nesse link.</a></p>
-6	Posso usar o projeto para o meu Portfólio?	<p><span style="background-color:rgb(255,255,255);color:rgb(3,5,23);">Definitivamente! A ideia é que vocês tenham um projeto de verdade que possam utilizar como bem entenderem.</span></p>
-7	Eu tenho outra dúvida!	<p><span style="background-color:rgb(255,255,255);color:rgb(3,5,23);">Sem problemas! Você pode acessar qualquer uma das </span><a href="https://willianjusten.com.br/about">minhas redes sociais</a><span style="background-color:rgb(255,255,255);color:rgb(3,5,23);"> ou entrar no </span><a href="http://bit.ly/slack-will">slack do nosso curso.</a></p>
 \.
 
 
@@ -2154,12 +2154,12 @@ COPY public.components_page_questions (id, question, answer) FROM stdin;
 COPY public.components_page_reviews (id, name, text) FROM stdin;
 3	Daniel P. de Oliveira	É incrível a forma como foi passado o conteúdo do curso, dá para ver que o Will tem um domínio impressionante sobre as ferramentas e tecnologias passadas, e mesmo eu tendo pouco conhecimento em React consegui acompanhar o curso sem muitas dificuldades. Espero que tenha mais cursos nessa linha, com certeza comprarei! Obrigado Will!
 4	Mileine Souto	Sensacional! A didática do instrutor é excelente para estruturar o curso de dar o ritmo das aulas. Foi uma experiência muito enriquecedora (e divertida) construir um blog seguindo o passo-a-passo dos vídeos. Não sabia nada sobre Gatsby, GraphQL ou Netlify CMS mas consegui acompanhar todo o processo sem grandes dificuldades. Além disso, foi ótimo aprender um pouquinho mais sobre algumas práticas de \ndesenvolvimento, como temas em React, estilização CSS in JS com styled-components e\nutilização do Algolia como solução de busca. Recomendo! =)
-5	Douglas Lopes	Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-6	Ariel Dalton	Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-7	Karoline Medeiros	Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+5	Douglas Lopes	Não teve nenhum curso que eu tenha feito, cuja autoria é do Willian Justem que eu não tenha gostado. Explica de uma maneira simples, didática, fácil de entender e assimilar. Fora isso, existem uma série de outros conhecimentos que acabam por vir embarcados em todos os cursos. Coisas como melhores práticas, facilidades da linguagem e itens novos da linguagem, organização de código, organização de arquivos, otimização para performance, otimização para SEO, etc. Sério, que curso completo e fácil de assimilar. Will, parabéns novamente e obrigado por disponibilizar um conteúdo tão rico e capaz de mudar a vida profissional de quem o faz. Não vejo a hora de fazer o próximo curso.
+6	Ariel Dalton	Sensacional esse curso, os pontos que destaco são a clareza nas explicações, stack tecnológica mais atual possível e sem enrolação. Agradeço ao Willian pelo esforço em produzir essa qualidade de curso que é até difícil encontrar algo desse na nível em Português.
+7	Karoline Medeiros	A didática é ótima, professor sabe o que fala e como passar a informação da melhor maneira possível. Acabei consumindo +60% do curso no dia em que comprei, depois que comecei foi difícil parar rsrs nota mil!
 1	Henrique Albert Schmalske	O Curo foi incrível! Gostei muito das explicações, bem claras e objetivas! Deixo a sugestão para um próximo Curso: NextJS Mostrando fazer um Ecommerce. Compraria sem nem olhar o preço.
 2	Alexandre Teixeira	Esse já é o terceiro curso do Will que faço, e a didática do cara é incrível! Além disso, o cara segue trazendo o que tem de mais moderno no mercado de forma bem explicada e com aplicações práticas.
-8	Luiz Cláudio Silva	Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+8	Luiz Cláudio Silva	Curso excelente! O Willian aborda os assuntos com uma explicação muito clara, simples e, a meu ver, com uma profundidade "na medida" (nem superficial, nem super aprofundado). Também deixa um "caminho" para o caso de o aluno querer se aprofundar em algum detalhe específico e tem se demonstrado sempre solícito tanto nas perguntas aqui na Udemy quanto lá no Slack. Por fim, recomendo também a leitura dos artigos do próprio blog do Willian. Lá ele fala sobre vários assuntos, inclusive tocando em em um ponto que não é citado pela maioria dos profissionais: problemas com saúde (Ex.: depressão). Ganhou um "fã", com ctz :)
 \.
 
 
@@ -2452,7 +2452,7 @@ COPY public.i18n_locales (id, name, code, created_by, updated_by, created_at, up
 --
 
 COPY public.landing_pages (id, title, description, created_by, updated_by, created_at, updated_at, published_at) FROM stdin;
-1	React Avançado	Crie aplicações reais com NextJS, Strapi, GraphQL e mais!	1	1	2022-04-18 20:25:17.828+00	2022-04-19 16:36:39.212+00	2022-04-18 20:25:17.828+00
+1	React Avançado	Crie aplicações reais com NextJS, Strapi, GraphQL e mais!	1	1	2022-04-18 20:25:17.828+00	2022-04-20 12:24:53.593+00	2022-04-18 20:25:17.828+00
 \.
 
 
@@ -2461,10 +2461,10 @@ COPY public.landing_pages (id, title, description, created_by, updated_by, creat
 --
 
 COPY public.landing_pages_components (id, field, "order", component_type, component_id, landing_page_id) FROM stdin;
-2	button	1	components_page_buttons	1	1
 1	header	1	components_page_headers	1	1
 4	sectionAboutProject	1	components_page_section_about_projects	1	1
 5	sectionTech	1	components_page_section_teches	1	1
+2	button	1	components_page_buttons	1	1
 6	sectionConcepts	1	components_page_section_concepts	1	1
 3	sectionModules	1	components_page_section_modules	1	1
 7	sectionAgenda	1	components_page_section_agenda	1	1
@@ -2605,8 +2605,8 @@ COPY public.strapi_webhooks (id, name, url, headers, events, enabled) FROM stdin
 --
 
 COPY public.upload_file (id, name, "alternativeText", caption, width, height, formats, hash, ext, mime, size, url, "previewUrl", provider, provider_metadata, created_by, updated_by, created_at, updated_at) FROM stdin;
-3	capa-do-projeto.webp			586	447	{"small": {"ext": ".webp", "url": "/uploads/small_capa_do_projeto_7c06d79745.webp", "hash": "small_capa_do_projeto_7c06d79745", "mime": "image/webp", "name": "small_capa-do-projeto.webp", "path": null, "size": 21.43, "width": 500, "height": 381}, "thumbnail": {"ext": ".webp", "url": "/uploads/thumbnail_capa_do_projeto_7c06d79745.webp", "hash": "thumbnail_capa_do_projeto_7c06d79745", "mime": "image/webp", "name": "thumbnail_capa-do-projeto.webp", "path": null, "size": 6.1, "width": 205, "height": 156}}	capa_do_projeto_7c06d79745	.webp	image/webp	21.71	/uploads/capa_do_projeto_7c06d79745.webp	\N	local	\N	1	1	2022-04-18 20:28:31.927+00	2022-04-18 20:28:31.941+00
-4	typescript.svg			128	129	\N	typescript_c388976265	.svg	image/svg+xml	1.84	/uploads/typescript_c388976265.svg	\N	local	\N	1	1	2022-04-18 20:30:59.434+00	2022-04-18 20:30:59.449+00
+3	capa-do-projeto.webp	Tela do ecommerce com uma imagem do CMS por trás		586	447	{"small": {"ext": ".webp", "url": "/uploads/small_capa_do_projeto_7c06d79745.webp", "hash": "small_capa_do_projeto_7c06d79745", "mime": "image/webp", "name": "small_capa-do-projeto.webp", "path": null, "size": 21.43, "width": 500, "height": 381}, "thumbnail": {"ext": ".webp", "url": "/uploads/thumbnail_capa_do_projeto_7c06d79745.webp", "hash": "thumbnail_capa_do_projeto_7c06d79745", "mime": "image/webp", "name": "thumbnail_capa-do-projeto.webp", "path": null, "size": 6.1, "width": 205, "height": 156}}	capa_do_projeto_7c06d79745	.webp	image/webp	21.71	/uploads/capa_do_projeto_7c06d79745.webp	\N	local	\N	1	1	2022-04-18 20:28:31.927+00	2022-04-20 12:16:05.745+00
+4	typescript.svg			128	129	\N	typescript_c388976265	.svg	image/svg+xml	1.84	/uploads/typescript_c388976265.svg	\N	local	\N	1	1	2022-04-18 20:30:59.434+00	2022-04-20 12:18:08.768+00
 5	react.svg			131	129	\N	react_8f49da24c8	.svg	image/svg+xml	2.23	/uploads/react_8f49da24c8.svg	\N	local	\N	1	1	2022-04-18 20:31:24.344+00	2022-04-18 20:31:24.358+00
 6	nextjs.svg			131	128	\N	nextjs_d7a2413286	.svg	image/svg+xml	1.29	/uploads/nextjs_d7a2413286.svg	\N	local	\N	1	1	2022-04-18 20:31:49.344+00	2022-04-18 20:31:49.358+00
 7	strapi.svg			128	129	\N	strapi_e53ae8016a	.svg	image/svg+xml	1.17	/uploads/strapi_e53ae8016a.svg	\N	local	\N	1	1	2022-04-18 20:32:09.534+00	2022-04-18 20:32:09.55+00
@@ -2640,27 +2640,27 @@ COPY public.upload_file_morph (id, upload_file_id, related_id, related_type, fie
 71	14	1	authors	photo	1
 72	15	2	authors	photo	1
 73	16	3	authors	photo	1
-398	2	1	components_page_headers	image	1
-399	3	1	components_page_section_about_projects	image	1
-400	4	1	components_page_tech_icons	icon	1
-401	5	2	components_page_tech_icons	icon	1
-402	6	3	components_page_tech_icons	icon	1
-403	7	4	components_page_tech_icons	icon	1
-404	8	5	components_page_tech_icons	icon	1
-405	9	6	components_page_tech_icons	icon	1
-406	10	7	components_page_tech_icons	icon	1
-407	11	8	components_page_tech_icons	icon	1
-408	12	9	components_page_tech_icons	icon	1
-409	13	10	components_page_tech_icons	icon	1
-410	17	1	components_page_reviews	photo	1
-411	18	2	components_page_reviews	photo	1
-412	19	3	components_page_reviews	photo	1
-413	20	4	components_page_reviews	photo	1
-414	21	5	components_page_reviews	photo	1
-415	22	6	components_page_reviews	photo	1
-416	23	7	components_page_reviews	photo	1
-417	24	8	components_page_reviews	photo	1
-418	1	1	landing_pages	logo	1
+461	2	1	components_page_headers	image	1
+462	3	1	components_page_section_about_projects	image	1
+463	4	1	components_page_tech_icons	icon	1
+464	5	2	components_page_tech_icons	icon	1
+465	6	3	components_page_tech_icons	icon	1
+466	7	4	components_page_tech_icons	icon	1
+467	8	5	components_page_tech_icons	icon	1
+468	9	6	components_page_tech_icons	icon	1
+469	10	7	components_page_tech_icons	icon	1
+470	11	8	components_page_tech_icons	icon	1
+471	12	9	components_page_tech_icons	icon	1
+472	13	10	components_page_tech_icons	icon	1
+473	17	1	components_page_reviews	photo	1
+474	18	2	components_page_reviews	photo	1
+475	19	3	components_page_reviews	photo	1
+476	20	4	components_page_reviews	photo	1
+477	21	5	components_page_reviews	photo	1
+478	22	6	components_page_reviews	photo	1
+479	23	7	components_page_reviews	photo	1
+480	24	8	components_page_reviews	photo	1
+481	1	1	landing_pages	logo	1
 \.
 
 
@@ -3143,7 +3143,7 @@ SELECT pg_catalog.setval('public.upload_file_id_seq', 24, true);
 -- Name: upload_file_morph_id_seq; Type: SEQUENCE SET; Schema: public; Owner: strapi
 --
 
-SELECT pg_catalog.setval('public.upload_file_morph_id_seq', 418, true);
+SELECT pg_catalog.setval('public.upload_file_morph_id_seq', 481, true);
 
 
 --
