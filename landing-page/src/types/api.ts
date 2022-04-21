@@ -112,6 +112,16 @@ export type ReviewsBoxProps = {
   reviews: ReviewProps[]
 }
 
+export type QuestionProps = {
+  question: string
+  answer: string
+}
+
+export type FaqProps = {
+  title: string
+  questions: QuestionProps[]
+}
+
 export type LandingPageProps = {
   logo: LogoProps
   header: HeaderProps
@@ -123,4 +133,5 @@ export type LandingPageProps = {
   pricingBox: PricingBoxProps
   aboutUs: AboutUsProps
   reviewsBox: ReviewsBoxProps
+  faq: FaqProps
 }
