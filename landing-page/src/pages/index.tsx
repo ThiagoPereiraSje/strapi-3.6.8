@@ -18,12 +18,18 @@ import client from 'graphql/client'
 import GET_LANDING_PAGE from 'graphql/queries/getLandingPage'
 import { LandingPageProps } from 'types/api'
 
-const Index = ({ logo, header, aboutProject, techTools }: LandingPageProps) => (
+const Index = ({
+  logo,
+  header,
+  aboutProject,
+  techTools,
+  learnConcepts
+}: LandingPageProps) => (
   <>
     <SectionHero logo={logo} header={header} />
     <SectionAboutProject aboutProject={aboutProject} />
     <SectionTech techTools={techTools} />
-    <SectionConcepts />
+    <SectionConcepts learnConcepts={learnConcepts} />
     <SectionModules />
     <SectionAgenda />
     <PricingBox />
@@ -37,8 +43,6 @@ const Index = ({ logo, header, aboutProject, techTools }: LandingPageProps) => (
 
 export const getStaticProps: GetStaticProps = async () => {
   const { landingPage } = await client.request(GET_LANDING_PAGE)
-
-  // console.log(landingPage)
 
   return {
     props: {

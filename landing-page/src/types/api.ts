@@ -39,9 +39,19 @@ export type TechToolsProps = {
   techIcons: TechIconProps[]
 }
 
+export type ConceptProps = {
+  title: string
+}
+
+export type LearnConceptsProps = {
+  title: string
+  concepts: ConceptProps[]
+}
+
 export type LandingPageProps = {
   logo: LogoProps
   header: HeaderProps
   aboutProject: AboutProjectProps
   techTools: TechToolsProps
+  learnConcepts: LearnConceptsProps
 }
