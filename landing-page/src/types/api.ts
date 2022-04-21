@@ -27,8 +27,21 @@ export type AboutProjectProps = {
   }
 }
 
+export type TechIconProps = {
+  icon: {
+    url: string
+  }
+  title: string
+}
+
+export type TechToolsProps = {
+  title: string
+  techIcons: TechIconProps[]
+}
+
 export type LandingPageProps = {
   logo: LogoProps
   header: HeaderProps
   aboutProject: AboutProjectProps
+  techTools: TechToolsProps
 }
