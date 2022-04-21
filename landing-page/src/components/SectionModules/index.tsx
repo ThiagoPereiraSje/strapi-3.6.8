@@ -4,21 +4,31 @@ import Heading from 'components/Heading'
 import Container from 'components/Container'
 import CardModule from 'components/CardModule'
 
-import content from './content'
 import * as S from './styles'
+import { CourseModulesProps } from 'types/api'
 
-const SectionModules = () => (
-  <Container>
-    <Heading reverseColor>Módulos deste curso</Heading>
+type Props = {
+  courseModules: CourseModulesProps
+}
 
-    <S.Content>
-      {content.map(({ title, subtitle, description }, index) => (
-        <CardModule key={index} title={title} subTitle={subtitle}>
-          <div dangerouslySetInnerHTML={{ __html: description }} />
-        </CardModule>
-      ))}
-    </S.Content>
-  </Container>
-)
+const SectionModules = ({ courseModules }: Props) => {
+  console.log({ courseModules })
+
+  return (
+    <Container>
+      <Heading reverseColor>{courseModules.title}</Heading>
+
+      <S.Content>
+        {courseModules.modules.map(
+          ({ title, subtitle, description }, index) => (
+            <CardModule key={index} title={title} subTitle={subtitle}>
+              <div dangerouslySetInnerHTML={{ __html: description }} />
+            </CardModule>
+          )
+        )}
+      </S.Content>
+    </Container>
+  )
+}
 
 export default SectionModules
