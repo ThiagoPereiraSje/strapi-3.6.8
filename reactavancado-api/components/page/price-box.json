@@ -2,7 +2,8 @@
   "collectionName": "components_page_price_boxes",
   "info": {
     "name": "priceBox",
-    "icon": "dollar-sign"
+    "icon": "dollar-sign",
+    "description": ""
   },
   "options": {},
   "attributes": {
@@ -19,16 +20,18 @@
       "type": "integer",
       "required": true
     },
-    "benefits": {
-      "type": "richtext",
-      "default": "Create items as bullet list",
-      "required": true
-    },
     "button": {
       "type": "component",
       "repeatable": false,
       "component": "page.button",
       "required": true
+    },
+    "benefits": {
+      "type": "component",
+      "repeatable": true,
+      "component": "page.benefits",
+      "required": true,
+      "min": 1
     }
   }
 }
