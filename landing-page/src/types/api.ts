@@ -99,6 +99,19 @@ export type AboutUsProps = {
   authors: AuthorProps[]
 }
 
+export type ReviewProps = {
+  photo: {
+    url: string
+  }
+  name: string
+  text: string
+}
+
+export type ReviewsBoxProps = {
+  title: string
+  reviews: ReviewProps[]
+}
+
 export type LandingPageProps = {
   logo: LogoProps
   header: HeaderProps
@@ -109,4 +122,5 @@ export type LandingPageProps = {
   agenda: AgendaProps
   pricingBox: PricingBoxProps
   aboutUs: AboutUsProps
+  reviewsBox: ReviewsBoxProps
 }

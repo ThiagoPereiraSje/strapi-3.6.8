@@ -104,6 +104,19 @@ const GET_LANDING_PAGE = /* GraphQL */ `
     }
   }
 
+  fragment reviewsBox on LandingPage {
+    reviewsBox: sectionReviews {
+      title
+      reviews {
+        photo {
+          url
+        }
+        name
+        text
+      }
+    }
+  }
+
   query GET_LANDING_PAGE {
     landingPage {
       ...logo
@@ -115,6 +128,7 @@ const GET_LANDING_PAGE = /* GraphQL */ `
       ...agenda
       ...pricingBox
       ...aboutUs
+      ...reviewsBox
     }
   }
 `
