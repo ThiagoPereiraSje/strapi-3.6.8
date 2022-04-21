@@ -59,6 +59,11 @@ export type CourseModulesProps = {
   modules: ModuleProps[]
 }
 
+export type AgendaProps = {
+  title: string
+  description: string
+}
+
 export type LandingPageProps = {
   logo: LogoProps
   header: HeaderProps
@@ -66,4 +71,5 @@ export type LandingPageProps = {
   techTools: TechToolsProps
   learnConcepts: LearnConceptsProps
   courseModules: CourseModulesProps
+  agenda: AgendaProps
 }

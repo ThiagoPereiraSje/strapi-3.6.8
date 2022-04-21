@@ -12,8 +12,6 @@ type Props = {
 }
 
 const SectionModules = ({ courseModules }: Props) => {
-  console.log({ courseModules })
-
   return (
     <Container>
       <Heading reverseColor>{courseModules.title}</Heading>
